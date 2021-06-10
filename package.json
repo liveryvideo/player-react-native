@@ -37,12 +37,8 @@
     "android"
   ],
   "repository": "https://bitbucket.org/exmachina/livery-sdk-react-native.git",
-  "author": "Ex Machina <frits@exmachina.nl> (https://github.com/frits-exmachina)",
+  "author": "Ex Machina",
   "license": "MIT",
-  "bugs": {
-    "url": "https://bitbucket.org/exmachina/livery-sdk-react-native.git/issues"
-  },
-  "homepage": "https://bitbucket.org/exmachina/livery-sdk-react-native.git#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
