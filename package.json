@@ -39,6 +39,7 @@
   "repository": "https://bitbucket.org/exmachina/livery-sdk-react-native.git",
   "author": "Ex Machina",
   "license": "MIT",
+  "homepage": "https://www.npmjs.com/package/@exmg/livery-react-native",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
