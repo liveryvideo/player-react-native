@@ -1,0 +1,3 @@
+<resources>
+    <bool name="livery_sdk_auto_init">false</bool>
+</resources>
