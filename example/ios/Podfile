@@ -6,6 +6,8 @@ use_frameworks!
 
 # Livery private repository 
 source 'https://github.com/exmg/livery-sdk-ios-podspec.git'
+# Default CocoaPods repository 
+source 'https://cdn.cocoapods.org/'
 
 target 'LiveryReactNativeExample' do
   config = use_native_modules!
