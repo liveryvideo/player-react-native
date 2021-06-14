@@ -1,12 +1,23 @@
 import * as React from 'react';
 
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import LiveryReactNativeViewManager from '@exmg/livery-react-native';
 
 export default function App() {
+  const [streamId, setStreamId] = React.useState('ABC');
+
   return (
     <View style={styles.container}>
-      <LiveryReactNativeViewManager color="#32a852" style={styles.box} />
+      <Text
+        onPress={() => {
+          console.log('PRESSED');
+
+          setStreamId('5ddb98f5e4b0937e6a4507f2');
+        }}
+      >
+        Press me
+      </Text>
+      <LiveryReactNativeViewManager streamId={streamId} style={styles.box} />
     </View>
   );
 }
@@ -18,8 +29,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   box: {
-    width: 60,
-    height: 60,
+    width: 350,
+    height: 200,
     marginVertical: 20,
   },
 });
