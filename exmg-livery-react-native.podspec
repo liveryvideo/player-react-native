@@ -17,5 +17,5 @@ Pod::Spec.new do |s|
   s.swift_versions = ["5.1"]
 
   s.dependency "React-Core"
-  s.dependency "Livery", "0.11.6"
+  s.dependency "Livery", "1.1.1"
 end

@@ -25,7 +25,7 @@ open class LiveryInternalView: UIView {
     private var requestCounter: Int32 = 0
     
     /// Create a player instance.
-    open func createPlayer(options: playerOptions = playerOptions()) {
+    open func createPlayer() {
         assert(player == nil)
         assert(window != nil)
         
@@ -46,7 +46,7 @@ open class LiveryInternalView: UIView {
                 guard self?.requestCounter == request else { return }
                 
                 // Create the Livery player. This may block for a while.
-                guard let player = livery.createPlayer(options: options) else {
+                guard let player = livery.createPlayer() else {
                     print("Could not create Livery player instance")
                     return
                 }
@@ -57,7 +57,6 @@ open class LiveryInternalView: UIView {
                         // We were interrupted, throw away the player.
                         LiverySDKProvider.queue.async {
                             player.stop()
-                            player.dispose()
                         }
                         return
                     }
@@ -83,7 +82,6 @@ open class LiveryInternalView: UIView {
             if let player = player {
                 self.delegate?.liveryView(self, willDisposePlayer: player)
                 player.stop()
-                player.dispose()
                 self.player = nil
             }
         }

@@ -45,7 +45,7 @@ class LiveryReactNativeView : UIView {
     
     private func createPlayer() {
         // Create the Livery player. This may block for a while.
-        guard let player = livery.createPlayer(options: playerOptions()) else {
+        guard let player = livery.createPlayer() else {
             print("Could not create Livery player instance")
             return
         }
