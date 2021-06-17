@@ -11,13 +11,18 @@ export default function App() {
       <Text
         onPress={() => {
           console.log('PRESSED');
-
           setStreamId('5ddb98f5e4b0937e6a4507f2');
         }}
       >
         Press me
       </Text>
-      <LiveryReactNativeViewManager streamId={streamId} style={styles.box} />
+      <LiveryReactNativeViewManager 
+        streamId={streamId} 
+        style={styles.box} 
+        onPlaybackStateDidChange={ 
+          (arg) => { console.log("video state", arg.nativeEvent) }
+         }
+      />
     </View>
   );
 }
