@@ -8,7 +8,7 @@ interface VideoState {
 type LiveryReactNativeProps = {
   streamId: string;
   style: ViewStyle;
-  onPlaybackStateDidChange?: (ev: SyntheticEvent<unknown, VideoState>) => void;
+  onPlaybackStateDidChange?: (event: SyntheticEvent<unknown, VideoState>) => void;
 };
 
 export const LiveryReactNativeViewManager =

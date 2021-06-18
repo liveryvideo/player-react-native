@@ -20,7 +20,7 @@ export default function App() {
         streamId={streamId} 
         style={styles.box} 
         onPlaybackStateDidChange={ 
-          (arg) => { console.log("video state", arg.nativeEvent) }
+          (event) => { console.log("video state", event.nativeEvent) }
          }
       />
     </View>

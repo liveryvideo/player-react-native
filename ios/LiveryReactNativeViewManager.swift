@@ -10,9 +10,10 @@ class LiveryReactNativeViewManager: RCTViewManager {
 
 class LiveryReactNativeView: UIView {
     
+    // MARK: Properties
     private var livery: LiverySDK = LiverySDK()
     private var player: Player?
-        
+    
     @objc open var streamId: String? {
         didSet {
             guard let streamId = self.streamId else { return }
@@ -22,7 +23,10 @@ class LiveryReactNativeView: UIView {
     
     /// Called when the playback state change
     @objc open var onPlaybackStateDidChange: RCTBubblingEventBlock?
-    
+}
+
+// MARK: Initialize SDK and Player creation
+extension LiveryReactNativeView {
     private func initializeSDK(streamId: String) {
         player?.stop()
         
@@ -54,9 +58,9 @@ class LiveryReactNativeView: UIView {
     }
 }
 
+// MARK: Player Delegate
 extension LiveryReactNativeView: PlayerDelegate {
     func playbackStateDidChange(playbackState: Player.PlaybackState) {
-        print("playbackStateDidChange state: \(playbackState.description)")
         onPlaybackStateDidChange?(["state": playbackState.description])
     }
 }
