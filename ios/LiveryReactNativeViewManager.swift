@@ -11,56 +11,34 @@ class LiveryReactNativeViewManager: RCTViewManager {
 class LiveryReactNativeView: UIView {
     
     // MARK: Properties
-    private var livery: LiverySDK = LiverySDK()
-    private var player: Player?
+    private var player: LiveryPlayer = LiveryPlayer()
     
-    @objc open var streamId: String? {
+    @objc var streamId: String? {
         didSet {
             guard let streamId = self.streamId else { return }
-            initializeSDK(streamId: streamId)
+            player.initializeSDK(streamId: streamId, on: self, delegate: self)
         }
     }
     
     /// Called when the playback state change
-    @objc open var onPlaybackStateDidChange: RCTBubblingEventBlock?
-}
-
-// MARK: Initialize SDK and Player creation
-extension LiveryReactNativeView {
-    private func initializeSDK(streamId: String) {
-        player?.stop()
-        
-        livery.initialize(streamId: streamId) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success:
-                print("Livery SDK initialization was successful")
-                DispatchQueue.main.async {
-                    self.createPlayer()
-                }
-                
-            case .failure(let error):
-                print("Livery SDK initialization failed: \(error.localizedDescription)")
-            }
-        }
-    }
+    @objc var onPlaybackStateDidChange: RCTBubblingEventBlock?
     
-    private func createPlayer() {
-        guard let player = livery.createPlayer() else {
-            print("Could not create Livery player instance")
-            return
-        }
-        
-        player.setView(view: self)
-        player.delegate = self
-        self.player = player
-    }
+    /// Called when the player gets a custom message from the interactive bridge
+    @objc var onGetCustomMessageValue: RCTBubblingEventBlock?
 }
 
 // MARK: Player Delegate
 extension LiveryReactNativeView: PlayerDelegate {
     func playbackStateDidChange(playbackState: Player.PlaybackState) {
-        onPlaybackStateDidChange?(["state": playbackState.description])
+        onPlaybackStateDidChange?(["playbackState": playbackState.description])
+    }
+}
+
+extension LiveryReactNativeView: PlayerInteractiveBridgeDelegate {
+    func getCustomMessageValue(message name: String, arg: Any?, completionHandler: @escaping (Any?) -> Void) {
+        print("[Player Interactive Bridge] getCustomMessageValue name: [\(name)] arg: [\(arg ?? "nil")]")
+        
+        player.addMessage(with: name, handler: completionHandler)
+        onGetCustomMessageValue?(["name": name, "arg": arg ?? NSNull()])
     }
 }

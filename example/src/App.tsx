@@ -1,7 +1,9 @@
 import * as React from 'react';
 
-import { StyleSheet, Text, View } from 'react-native';
+import { NativeModules, StyleSheet, Text, View } from 'react-native';
 import LiveryReactNativeViewManager from '@exmg/livery-react-native';
+
+const {LiveryPlayer} = NativeModules;
 
 export default function App() {
   const [streamId, setStreamId] = React.useState('ABC');
@@ -22,7 +24,68 @@ export default function App() {
         onPlaybackStateDidChange={ 
           (event) => { console.log("video state", event.nativeEvent) }
          }
+         onGetCustomMessageValue={ 
+          (event) => { 
+            console.log("onGetCustomMessageValue", event.nativeEvent) 
+            LiveryPlayer.sendResponseToInteractiveBridge(event.nativeEvent['name'], 'react got this');
+          }
+         }
       />
+
+      <Text>
+          
+      </Text>
+    
+      <Text
+        onPress={() => {
+          console.log('Play');
+            LiveryPlayer.play();
+        }}
+      >
+        Play
+      </Text>
+
+      <Text>
+          
+      </Text>
+
+      <Text
+        onPress={() => {
+          console.log('Pause');
+          LiveryPlayer.pause();
+        }}
+      >
+        Pause
+      </Text>
+
+      <Text>
+        
+      </Text>
+
+      <Text
+        onPress={() => {
+          console.log('Stop');
+          LiveryPlayer.stop();
+        }}
+      >
+        Stop
+      </Text>
+
+      <Text>
+          
+      </Text>
+
+      <Text
+        onPress={() => {
+          console.log('Send Custom Message');
+          LiveryPlayer.sendInteractiveBridgeCustomCommand('test', 'react arg', (error: any, result: any) => {
+            console.log('Send Custom Message result:', result);
+          });
+        }}
+      >
+        Send Custom Message
+      </Text>
+
     </View>
   );
 }

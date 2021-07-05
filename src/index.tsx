@@ -2,13 +2,14 @@ import type { SyntheticEvent } from 'react';
 import { requireNativeComponent, ViewStyle } from 'react-native';
 
 interface VideoState {
-  state: string;
+    playbackState: string;
 }
 
 type LiveryReactNativeProps = {
   streamId: string;
   style: ViewStyle;
   onPlaybackStateDidChange?: (event: SyntheticEvent<unknown, VideoState>) => void;
+  onGetCustomMessageValue?: (event: SyntheticEvent<unknown, any>) => void;
 };
 
 export const LiveryReactNativeViewManager =
