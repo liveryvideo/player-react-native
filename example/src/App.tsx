@@ -1,9 +1,7 @@
 import * as React from 'react';
 
-import { NativeModules, StyleSheet, Text, View } from 'react-native';
-import LiveryReactNativeViewManager from '@exmg/livery-react-native';
-
-const {LiveryPlayer} = NativeModules;
+import { StyleSheet, Text, View } from 'react-native';
+import Player from '@exmg/livery-react-native';
 
 export default function App() {
   const [streamId, setStreamId] = React.useState('ABC');
@@ -18,7 +16,7 @@ export default function App() {
       >
         Press me
       </Text>
-      <LiveryReactNativeViewManager 
+      <Player 
         streamId={streamId} 
         style={styles.box} 
         onPlaybackStateDidChange={ 
@@ -30,9 +28,9 @@ export default function App() {
             const name = event.nativeEvent['name']
             const arg = event.nativeEvent['arg']
             if (arg !== null) {
-              LiveryPlayer.sendResponseToInteractiveBridge(name, 'react got this with arg: ' + arg);
+              Player.sendResponseToInteractiveBridge(name, 'react got this with arg: ' + arg);
             } else {
-              LiveryPlayer.sendResponseToInteractiveBridge(name, 'react got this');
+              Player.sendResponseToInteractiveBridge(name, 'react got this');
             }
           }
          }
@@ -45,7 +43,7 @@ export default function App() {
       <Text
         onPress={() => {
           console.log('Play');
-            LiveryPlayer.play();
+          Player.play();
         }}
       >
         Play
@@ -58,7 +56,7 @@ export default function App() {
       <Text
         onPress={() => {
           console.log('Pause');
-          LiveryPlayer.pause();
+          Player.pause();
         }}
       >
         Pause
@@ -71,7 +69,7 @@ export default function App() {
       <Text
         onPress={() => {
           console.log('Stop');
-          LiveryPlayer.stop();
+          Player.stop();
         }}
       >
         Stop
@@ -84,11 +82,11 @@ export default function App() {
       <Text
         onPress={() => {
           console.log('Send Custom Message');
-          LiveryPlayer.sendInteractiveBridgeCustomCommand('test', 'react arg', (error: any, result: any) => {
+          Player.sendInteractiveBridgeCustomCommand('test', 'react arg', (error: any, result: any) => {
             if (error !== null) {
-              console.log('Send Custom Message error:', error);
+                console.log('Send Custom Message error:', error);
             } else {
-              console.log('Send Custom Message result:', result);
+                console.log('Send Custom Message result:', result);
             }
           });
         }}
