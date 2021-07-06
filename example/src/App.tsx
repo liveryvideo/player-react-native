@@ -79,7 +79,11 @@ export default function App() {
         onPress={() => {
           console.log('Send Custom Message');
           LiveryPlayer.sendInteractiveBridgeCustomCommand('test', 'react arg', (error: any, result: any) => {
-            console.log('Send Custom Message result:', result);
+            if (error !== null) {
+              console.log('Send Custom Message error:', error);
+            } else {
+              console.log('Send Custom Message result:', result);
+            }
           });
         }}
       >
