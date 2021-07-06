@@ -27,7 +27,13 @@ export default function App() {
          onGetCustomMessageValue={ 
           (event) => { 
             console.log("onGetCustomMessageValue", event.nativeEvent) 
-            LiveryPlayer.sendResponseToInteractiveBridge(event.nativeEvent['name'], 'react got this');
+            const name = event.nativeEvent['name']
+            const arg = event.nativeEvent['arg']
+            if (arg !== null) {
+              LiveryPlayer.sendResponseToInteractiveBridge(name, 'react got this with arg: ' + arg);
+            } else {
+              LiveryPlayer.sendResponseToInteractiveBridge(name, 'react got this');
+            }
           }
          }
       />
