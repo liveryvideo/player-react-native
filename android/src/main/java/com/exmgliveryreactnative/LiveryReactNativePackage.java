@@ -6,13 +6,16 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class LiveryReactNativePackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-        return Collections.emptyList();
+      List<NativeModule> modules = new ArrayList<>();
+      modules.add(new LiveryPlayer(reactContext));
+      return modules;
     }
 
     @Override
