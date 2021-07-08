@@ -27,11 +27,11 @@ export default function App() {
             console.log("onGetCustomMessageValue", event.nativeEvent) 
             const name = event.nativeEvent['name']
             const arg = event.nativeEvent['arg']
-            if (arg !== null) {
-              Player.sendResponseToInteractiveBridge(name, 'react got this with arg: ' + arg);
-            } else {
-              Player.sendResponseToInteractiveBridge(name, 'react got this');
-            }
+            // if (arg !== null) {
+            //   Player.sendResponseToInteractiveBridge(name, 'react got this with arg: ' + arg);
+            // } else {
+            //   Player.sendResponseToInteractiveBridge(name, 'react got this');
+            // }
           }
          }
       />
@@ -79,20 +79,20 @@ export default function App() {
           
       </Text>
 
-      <Text
+      {/* <Text
         onPress={() => {
           console.log('Send Custom Message');
-          Player.sendInteractiveBridgeCustomCommand('test', 'react arg', (error: any, result: any) => {
-            if (error !== null) {
-                console.log('Send Custom Message error:', error);
-            } else {
-                console.log('Send Custom Message result:', result);
-            }
-          });
+          // Player.sendInteractiveBridgeCustomCommand('test', 'react arg', (error: any, result: any) => {
+          //   if (error !== null) {
+          //       console.log('Send Custom Message error:', error);
+          //   } else {
+          //       console.log('Send Custom Message result:', result);
+          //   }
+          // });
         }}
       >
         Send Custom Message
-      </Text>
+      </Text> */}
 
     </View>
   );
