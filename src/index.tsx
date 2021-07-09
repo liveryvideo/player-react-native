@@ -26,6 +26,7 @@ interface LiveryProps {
   onQualitiesDidChange?: (event: SyntheticEvent<unknown, any>) => void;
   onSelectedQualityDidChange?: (event: SyntheticEvent<unknown, any>) => void;
   onSourceDidChange?: (event: SyntheticEvent<unknown, any>) => void;
+  onTimeDidUpdate?: (event: SyntheticEvent<unknown, any>) => void;
   onGetCustomMessageValue?: (event: SyntheticEvent<unknown, any>) => void;
 }
 

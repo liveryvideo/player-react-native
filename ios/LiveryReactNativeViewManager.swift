@@ -36,6 +36,8 @@ class LiveryReactNativeView: UIView {
     @objc var onSelectedQualityDidChange: RCTBubblingEventBlock?
     /// Called when the player current source change
     @objc var onSourceDidChange: RCTBubblingEventBlock?
+    /// Called when the player current time change
+    @objc var onTimeDidUpdate: RCTBubblingEventBlock?
     /// Called when the player gets a custom message from the interactive bridge
     @objc var onGetCustomMessageValue: RCTBubblingEventBlock?
 }
@@ -73,6 +75,10 @@ extension LiveryReactNativeView: PlayerDelegate {
     
     func sourceDidChange(currentSource: URL?) {
         onSourceDidChange?(["currentSource": currentSource?.absoluteString ?? NSNull()])
+    }
+    
+    func timeDidUpdate(currentTime: TimeInterval) {
+        onTimeDidUpdate?(["currentTime": currentTime])
     }
 }
 

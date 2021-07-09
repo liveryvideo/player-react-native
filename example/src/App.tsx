@@ -43,6 +43,9 @@ export default function App() {
         onSourceDidChange={(event) => {
           console.log("onSourceDidChange", event.nativeEvent)
         }}
+        onTimeDidUpdate={(event) => {
+          console.log("onTimeDidUpdate", event.nativeEvent)
+        }}
         onGetCustomMessageValue={(event) => {
           console.log('onGetCustomMessageValue', event.nativeEvent);
           const name = event.nativeEvent['name'];
