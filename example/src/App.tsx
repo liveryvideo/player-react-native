@@ -16,30 +16,29 @@ export default function App() {
       >
         Press me
       </Text>
-      <Player 
-        streamId={streamId} 
-        style={styles.box} 
-        onPlaybackStateDidChange={ 
-          (event) => { console.log("video state", event.nativeEvent) }
-         }
-         onGetCustomMessageValue={ 
-          (event) => { 
-            console.log("onGetCustomMessageValue", event.nativeEvent) 
-            const name = event.nativeEvent['name']
-            const arg = event.nativeEvent['arg']
-            if (arg !== null) {
-              Player.sendResponseToInteractiveBridge(name, 'react got this with arg: ' + arg);
-            } else {
-              Player.sendResponseToInteractiveBridge(name, 'react got this');
-            }
+      <Player
+        streamId={streamId}
+        style={styles.box}
+        onPlaybackStateDidChange={(event) => {
+          console.log('video state', event.nativeEvent);
+        }}
+        onGetCustomMessageValue={(event) => {
+          console.log('onGetCustomMessageValue', event.nativeEvent);
+          const name = event.nativeEvent['name'];
+          const arg = event.nativeEvent['arg'];
+          if (arg !== null) {
+            Player.sendResponseToInteractiveBridge(
+              name,
+              'react got this with arg: ' + arg
+            );
+          } else {
+            Player.sendResponseToInteractiveBridge(name, 'react got this');
           }
-         }
+        }}
       />
 
-      <Text>
-          
-      </Text>
-    
+      <Text></Text>
+
       <Text
         onPress={() => {
           console.log('Play');
@@ -49,9 +48,7 @@ export default function App() {
         Play
       </Text>
 
-      <Text>
-          
-      </Text>
+      <Text></Text>
 
       <Text
         onPress={() => {
@@ -62,28 +59,28 @@ export default function App() {
         Pause
       </Text>
 
-      <Text>
-        
-      </Text>
+      <Text></Text>
 
       <Text
         onPress={() => {
           console.log('Send Custom Message');
-          Player.sendInteractiveBridgeCustomCommand('test', 'react arg', (error: any, result: any) => {
-            if (error !== null) {
+          Player.sendInteractiveBridgeCustomCommand(
+            'test',
+            'react arg',
+            (error: any, result: any) => {
+              if (error !== null) {
                 console.log('Send Custom Message error:', error);
-            } else {
+              } else {
                 console.log('Send Custom Message result:', result);
+              }
             }
-          });
+          );
         }}
       >
         Send Custom Message
       </Text>
 
-      <Text>
-        
-      </Text>
+      <Text></Text>
 
       <Text
         onPress={() => {
@@ -93,7 +90,6 @@ export default function App() {
       >
         Test interactive bridge
       </Text>
-
     </View>
   );
 }
