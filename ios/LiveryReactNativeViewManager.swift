@@ -26,6 +26,9 @@ class LiveryReactNativeView: UIView {
     /// Called when the active quality change
     @objc var onActiveQualityDidChange: RCTBubblingEventBlock?
     
+    /// Called when there's an error on the player
+    @objc var onPlayerError: RCTBubblingEventBlock?
+    
     /// Called when the player gets a custom message from the interactive bridge
     @objc var onGetCustomMessageValue: RCTBubblingEventBlock?
 }
@@ -38,6 +41,10 @@ extension LiveryReactNativeView: PlayerDelegate {
     
     func activeQualityDidChange(activeQuality: Quality?) {
         onActiveQualityDidChange?(["activeQuality": activeQuality?.label ?? NSNull()])
+    }
+    
+    func playerDidFail(error: Error) {
+        onPlayerError?(["error": error.localizedDescription])
     }
 }
 

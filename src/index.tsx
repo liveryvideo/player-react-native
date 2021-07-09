@@ -20,6 +20,7 @@ interface LiveryProps {
     event: SyntheticEvent<unknown, VideoState>
   ) => void;
   onActiveQualityDidChange?: (event: SyntheticEvent<unknown, any>) => void;
+  onPlayerError?: (event: SyntheticEvent<unknown, any>) => void;
   onGetCustomMessageValue?: (event: SyntheticEvent<unknown, any>) => void;
 }
 

@@ -25,6 +25,9 @@ export default function App() {
         onActiveQualityDidChange={(event) => {
             console.log("onActiveQualityDidChange", event.nativeEvent)
         }}
+        onPlayerError={(event) => {
+            console.log("onPlayerError", event.nativeEvent)
+        }}
         onGetCustomMessageValue={(event) => {
           console.log('onGetCustomMessageValue', event.nativeEvent);
           const name = event.nativeEvent['name'];
