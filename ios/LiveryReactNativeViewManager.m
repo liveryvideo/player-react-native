@@ -13,6 +13,7 @@ RCT_EXPORT_VIEW_PROPERTY(onQualitiesDidChange, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onSelectedQualityDidChange, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onSourceDidChange, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onTimeDidUpdate, RCTBubblingEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onVolumeDidChange, RCTBubblingEventBlock)
 
 RCT_EXPORT_VIEW_PROPERTY(onGetCustomMessageValue, RCTBubblingEventBlock)
 
