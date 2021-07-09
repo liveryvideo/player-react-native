@@ -32,6 +32,8 @@ class LiveryReactNativeView: UIView {
     @objc var onProgressDidChange: RCTBubblingEventBlock?
     /// Called when the player qualities change
     @objc var onQualitiesDidChange: RCTBubblingEventBlock?
+    /// Called when the player selected quality change
+    @objc var onSelectedQualityDidChange: RCTBubblingEventBlock?
     /// Called when the player gets a custom message from the interactive bridge
     @objc var onGetCustomMessageValue: RCTBubblingEventBlock?
 }
@@ -61,6 +63,10 @@ extension LiveryReactNativeView: PlayerDelegate {
     func qualitiesDidChange(qualities: [Quality]) {
         let qualitiesLabel = qualities.compactMap({ $0.label })
         onQualitiesDidChange?(["qualities": qualitiesLabel])
+    }
+    
+    func selectedQualityDidChange(selectedQuality: Quality?) {
+        onSelectedQualityDidChange?(["selectedQuality": selectedQuality?.label ?? NSNull()])
     }
 }
 

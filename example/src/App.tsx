@@ -37,6 +37,9 @@ export default function App() {
         onQualitiesDidChange={(event) => {
           console.log("onQualitiesDidChange", event.nativeEvent)
         }}
+        onSelectedQualityDidChange={(event) => {
+          console.log("onSelectedQualityDidChange", event.nativeEvent)
+        }}
         onGetCustomMessageValue={(event) => {
           console.log('onGetCustomMessageValue', event.nativeEvent);
           const name = event.nativeEvent['name'];

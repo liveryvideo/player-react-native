@@ -10,6 +10,7 @@ RCT_EXPORT_VIEW_PROPERTY(onPlayerError, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onPlayerDidRecover, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onProgressDidChange, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onQualitiesDidChange, RCTBubblingEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onSelectedQualityDidChange, RCTBubblingEventBlock)
 
 RCT_EXPORT_VIEW_PROPERTY(onGetCustomMessageValue, RCTBubblingEventBlock)
 
