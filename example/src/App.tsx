@@ -28,6 +28,9 @@ export default function App() {
         onPlayerError={(event) => {
             console.log("onPlayerError", event.nativeEvent)
         }}
+        onPlayerDidRecover={(event) => {
+          console.log("onPlayerDidRecover", event.nativeEvent)
+      }}
         onGetCustomMessageValue={(event) => {
           console.log('onGetCustomMessageValue', event.nativeEvent);
           const name = event.nativeEvent['name'];
