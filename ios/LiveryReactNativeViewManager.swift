@@ -34,6 +34,8 @@ class LiveryReactNativeView: UIView {
     @objc var onQualitiesDidChange: RCTBubblingEventBlock?
     /// Called when the player selected quality change
     @objc var onSelectedQualityDidChange: RCTBubblingEventBlock?
+    /// Called when the player current source change
+    @objc var onSourceDidChange: RCTBubblingEventBlock?
     /// Called when the player gets a custom message from the interactive bridge
     @objc var onGetCustomMessageValue: RCTBubblingEventBlock?
 }
@@ -67,6 +69,10 @@ extension LiveryReactNativeView: PlayerDelegate {
     
     func selectedQualityDidChange(selectedQuality: Quality?) {
         onSelectedQualityDidChange?(["selectedQuality": selectedQuality?.label ?? NSNull()])
+    }
+    
+    func sourceDidChange(currentSource: URL?) {
+        onSourceDidChange?(["currentSource": currentSource?.absoluteString ?? NSNull()])
     }
 }
 
