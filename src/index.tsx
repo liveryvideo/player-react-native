@@ -46,7 +46,7 @@ class Player extends PureComponent<LiveryReactNativeProps> {
     static pause = LiveryPlayer.pause;
     static stop = LiveryPlayer.stop;
     static sendResponseToInteractiveBridge = LiveryPlayer.sendResponseToInteractiveBridge;
-    // static sendInteractiveBridgeCustomCommand = LiveryPlayer.sendInteractiveBridgeCustomCommand;
+    static sendInteractiveBridgeCustomCommand = LiveryPlayer.sendInteractiveBridgeCustomCommand;
 
     render() {
         return (

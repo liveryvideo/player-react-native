@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
@@ -91,12 +92,27 @@ public class LiveryPlayer extends ReactContextBaseJavaModule {
     interactiveBridgeMessages.remove(forName);
   }
 
+  @ReactMethod
+  public void sendInteractiveBridgeCustomCommand(String forName, @Nullable String value, Callback callback) {
+    Log.d("[customCmdToIntBridge]","name: [" + forName + "] value: [" + value + "]");
+    playerView.sendInteractiveBridgeCustomCommand(forName, value, new LiveryInteractiveBridge.CustomCommandResponseCallback() {
+      @Override
+      public void result(@Nullable Object response, @Nullable String error) {
+        if (response != null) {
+          callback.invoke(response);
+        } else {
+          callback.invoke(error);
+        }
+      }
+    });
+  }
+
   private void createPlayer() {
     playerView.createPlayer(new LiveryPlayerView.CreatePlayerListener() {
       @Override
       public void finished() {
         Log.d("[LiveryPlayer]", "create player finished...");
-        playerView.setInteractiveUrl("https://interactive.liveryvideo.com");
+        //playerView.setInteractiveUrl("https://interactive.liveryvideo.com");
       }
     }, new LiveryPlayerView.CreatePlayerErrorListener() {
       @Override
