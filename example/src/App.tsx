@@ -27,11 +27,11 @@ export default function App() {
             console.log("onGetCustomMessageValue", event.nativeEvent) 
             const name = event.nativeEvent['name']
             const arg = event.nativeEvent['arg']
-            // if (arg !== null) {
-            //   Player.sendResponseToInteractiveBridge(name, 'react got this with arg: ' + arg);
-            // } else {
-            //   Player.sendResponseToInteractiveBridge(name, 'react got this');
-            // }
+            if (arg !== null) {
+              Player.sendResponseToInteractiveBridge(name, 'react got this with arg: ' + arg);
+            } else {
+              Player.sendResponseToInteractiveBridge(name, 'react got this');
+            }
           }
          }
       />

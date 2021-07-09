@@ -3,14 +3,20 @@ package com.exmgliveryreactnative;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import tv.exmg.livery.LiveryPlayerView;
 import tv.exmg.livery.LiverySDK;
+import tv.exmg.livery.interactivebridge.LiveryInteractiveBridge;
 
 import static com.facebook.react.bridge.UiThreadUtil.runOnUiThread;
 
@@ -20,6 +26,7 @@ public class LiveryPlayer extends ReactContextBaseJavaModule {
 
   private static LiveryPlayerView playerView;
   private static LiverySDK liverySDK;
+  private static Map<String, LiveryInteractiveBridge.CustomCommandResultCallback> interactiveBridgeMessages = new HashMap<String, LiveryInteractiveBridge.CustomCommandResultCallback>();
 
   @Override
   @NonNull
@@ -73,12 +80,23 @@ public class LiveryPlayer extends ReactContextBaseJavaModule {
     });
   }
 
+  public void addMessage(String name, @Nullable LiveryInteractiveBridge.CustomCommandResultCallback customCommandResultCallback) {
+    interactiveBridgeMessages.put(name, customCommandResultCallback);
+  }
+
+  @ReactMethod
+  public void sendResponseToInteractiveBridge(String forName, @Nullable String value) {
+    Log.d("[responseToIntBridge]","name: [" + forName + "] value: [" + value + "]");
+    interactiveBridgeMessages.get(forName).result(value);
+    interactiveBridgeMessages.remove(forName);
+  }
+
   private void createPlayer() {
     playerView.createPlayer(new LiveryPlayerView.CreatePlayerListener() {
       @Override
       public void finished() {
         Log.d("[LiveryPlayer]", "create player finished...");
-        //playerView.setInteractiveUrl("https://interactive.liveryvideo.com");
+        playerView.setInteractiveUrl("https://interactive.liveryvideo.com");
       }
     }, new LiveryPlayerView.CreatePlayerErrorListener() {
       @Override

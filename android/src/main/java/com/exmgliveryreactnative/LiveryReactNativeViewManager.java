@@ -1,6 +1,7 @@
 package com.exmgliveryreactnative;
 
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ import tv.exmg.livery.LiveryQuality;
 import tv.exmg.livery.LiveryResizeMode;
 
 import tv.exmg.livery.LiverySDK;
+import tv.exmg.livery.interactivebridge.LiveryInteractiveBridge;
 
 public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
 
@@ -66,6 +68,21 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
           }
         });
 
+      view.setInteractiveBridgeCustomCommandListener(new LiveryInteractiveBridge.CustomCommandListener() {
+        @Override
+        public void onMessage(@NonNull String name, @Nullable String arg, @Nullable LiveryInteractiveBridge.CustomCommandResultCallback customCommandResultCallback) {
+          Log.d("[CustomCommandListener]","onMessage name: [" + name + "] arg: [" + arg + "]");
+
+          player.addMessage(name, customCommandResultCallback);
+
+          WritableMap event = Arguments.createMap();
+          event.putString("name", name);
+          event.putString("arg", arg);
+          reactContext.getJSModule(RCTEventEmitter.class)
+            .receiveEvent(view.getId(), "onGetCustomMessageValue", event);
+        }
+      });
+
         player = new LiveryPlayer(view);
 
         // Forward lifecycle events to the player.
@@ -85,6 +102,16 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
           MapBuilder.of(
             "bubbled",
             "onPlaybackStateDidChange"
+          )
+        )
+      );
+      map.put(
+        "onGetCustomMessageValue",
+        MapBuilder.of(
+          "phasedRegistrationNames",
+          MapBuilder.of(
+            "bubbled",
+            "onGetCustomMessageValue"
           )
         )
       );
