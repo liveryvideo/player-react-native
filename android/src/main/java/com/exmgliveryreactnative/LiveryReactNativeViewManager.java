@@ -4,14 +4,24 @@ import android.graphics.Color;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import android.util.Log;
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.LifecycleEventListener;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
 
+
+import java.lang.ref.WeakReference;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import tv.exmg.livery.LiveryPlayerListener;
 import tv.exmg.livery.LiveryControlsOptions;
@@ -42,8 +52,19 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
         final LiveryPlayerView view = new LiveryPlayerView(reactContext.getCurrentActivity());
 
         view.setKeepScreenOn(true);
-        view.setTargetLatency(3000);
         view.setDebugModeEnabled(true);
+
+        view.registerListener(new LiveryPlayerListener() {
+          @Override
+          public void onPlayerStateChanged(LiveryPlayerState playerState) {
+            Log.d("[LiveryPlayerListener]", "onPlayerStateChanged " + playerState);
+
+            WritableMap event = Arguments.createMap();
+            event.putString("playbackState", playerState.toString());
+            reactContext.getJSModule(RCTEventEmitter.class)
+              .receiveEvent(view.getId(), "onPlaybackStateDidChange", event);
+          }
+        });
 
         player = new LiveryPlayer(view);
 
@@ -53,44 +74,61 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
         return view;
     }
 
+    @Nullable
+    @Override
+    public Map<String, Object> getExportedCustomBubblingEventTypeConstants() {
+      HashMap<String, Object> map = new HashMap<String, Object>();
+      map.put(
+        "onPlaybackStateDidChange",
+        MapBuilder.of(
+          "phasedRegistrationNames",
+          MapBuilder.of(
+            "bubbled",
+            "onPlaybackStateDidChange"
+          )
+        )
+      );
+      return map;
+    }
+
     @ReactProp(name = "streamId")
     public void setStreamId(LiveryPlayerView view, String streamId) {
       player.setStreamId(streamId);
     }
 
-  /**
-   * Connect a player to the React Native lifecycle.
-   */
-  private static void connectPlayerLifecycle(final LiveryPlayerView view, final ThemedReactContext context) {
-    // Forward lifecycle events to the view.
-    final LifecycleEventListener lifecycleEventListener = new LifecycleEventListener() {
-      @Override
-      public void onHostResume() {
-        view.onResume();
-      }
+    /**
+     * Connect a player to the React Native lifecycle.
+     */
+    private static void connectPlayerLifecycle(final LiveryPlayerView view, final ThemedReactContext context) {
+      // Forward lifecycle events to the view.
+      final LifecycleEventListener lifecycleEventListener = new LifecycleEventListener() {
+        @Override
+        public void onHostResume() {
+          view.onResume();
+        }
 
-      @Override
-      public void onHostPause() {
-        view.onPause();
-      }
+        @Override
+        public void onHostPause() {
+          view.onPause();
+        }
 
-      @Override
-      public void onHostDestroy() {
-        view.onDestroy();
-      }
-    };
+        @Override
+        public void onHostDestroy() {
+          view.onDestroy();
+        }
+      };
 
-    // Install the lifecycle listener, and make sure we properly clean up the player.
-    view.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-      @Override
-      public void onViewAttachedToWindow(View v) {
-        context.addLifecycleEventListener(lifecycleEventListener);
-      }
+      // Install the lifecycle listener, and make sure we properly clean up the player.
+      view.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+        @Override
+        public void onViewAttachedToWindow(View v) {
+          context.addLifecycleEventListener(lifecycleEventListener);
+        }
 
-      @Override
-      public void onViewDetachedFromWindow(View v) {
-        context.removeLifecycleEventListener(lifecycleEventListener);
-      }
-    });
-  }
+        @Override
+        public void onViewDetachedFromWindow(View v) {
+          context.removeLifecycleEventListener(lifecycleEventListener);
+        }
+      });
+    }
 }
