@@ -34,6 +34,9 @@ export default function App() {
         onProgressDidChange={(event) => {
           console.log("onProgressDidChange", event.nativeEvent)
         }}
+        onQualitiesDidChange={(event) => {
+          console.log("onQualitiesDidChange", event.nativeEvent)
+        }}
         onGetCustomMessageValue={(event) => {
           console.log('onGetCustomMessageValue', event.nativeEvent);
           const name = event.nativeEvent['name'];
