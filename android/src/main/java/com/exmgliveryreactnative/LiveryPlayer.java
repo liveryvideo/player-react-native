@@ -64,20 +64,14 @@ public class LiveryPlayer extends ReactContextBaseJavaModule {
     });
   }
 
-  public void setStreamId(String streamId) {
-    liverySDK.initialize(streamId, new LiverySDK.StateListener() {
+  @ReactMethod
+  public void setInteractiveURL(String urlString) {
+    runOnUiThread(new Runnable() {
       @Override
-      public void stateChanged(LiverySDK.State state) {
-        Log.d("CONSOLE LOG: ","STATE CHANGED " + state.toString());
-        if (LiverySDK.State.INITIALIZED.equals(state)) {
-          createPlayer();
-        }
+      public void run() {
+        playerView.setInteractiveUrl(urlString);
       }
     });
-  }
-
-  public void addMessage(String name, @Nullable LiveryInteractiveBridge.CustomCommandResultCallback customCommandResultCallback) {
-    interactiveBridgeMessages.put(name, customCommandResultCallback);
   }
 
   @ReactMethod
@@ -102,12 +96,27 @@ public class LiveryPlayer extends ReactContextBaseJavaModule {
     });
   }
 
+  public void setStreamId(String streamId) {
+    liverySDK.initialize(streamId, new LiverySDK.StateListener() {
+      @Override
+      public void stateChanged(LiverySDK.State state) {
+        Log.d("CONSOLE LOG: ","STATE CHANGED " + state.toString());
+        if (LiverySDK.State.INITIALIZED.equals(state)) {
+          createPlayer();
+        }
+      }
+    });
+  }
+
+  public void addMessage(String name, @Nullable LiveryInteractiveBridge.CustomCommandResultCallback customCommandResultCallback) {
+    interactiveBridgeMessages.put(name, customCommandResultCallback);
+  }
+
   private void createPlayer() {
     playerView.createPlayer(new LiveryPlayerView.CreatePlayerListener() {
       @Override
       public void finished() {
         Log.d("[LiveryPlayer]", "create player finished...");
-        //playerView.setInteractiveUrl("https://interactive.liveryvideo.com");
       }
     }, new LiveryPlayerView.CreatePlayerErrorListener() {
       @Override

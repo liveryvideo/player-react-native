@@ -25,6 +25,10 @@ typealias PlayerDelegateInteractive = PlayerDelegate & PlayerInteractiveBridgeDe
         LiveryPlayer.player?.pause()
     }
     
+    @objc func setInteractiveURL(_ interactiveURL: String) {
+        LiveryPlayer.player?.interactiveURL = URL(string: interactiveURL)
+    }
+    
     @objc static func requiresMainQueueSetup() -> Bool {
         return true
     }
@@ -62,7 +66,6 @@ extension LiveryPlayer {
         
         player.setView(view: view)
         player.delegate = delegate
-        player.interactiveURL = URL(string: "https://interactive.liveryvideo.com")
         player.interactiveBridgeDelegate = delegate
         LiveryPlayer.player = player
     }

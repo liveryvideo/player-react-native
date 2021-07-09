@@ -14,5 +14,6 @@ RCT_EXTERN_METHOD(play)
 RCT_EXTERN_METHOD(pause)
 RCT_EXTERN_METHOD(sendInteractiveBridgeCustomCommand: (NSString)name arg:(id)arg callback:(RCTResponseSenderBlock)callback)
 RCT_EXTERN_METHOD(sendResponseToInteractiveBridge: (NSString)forName value:(id)value)
+RCT_EXTERN_METHOD(setInteractiveURL: (NSString)interactiveURL)
 
 @end

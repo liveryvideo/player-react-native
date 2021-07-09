@@ -81,6 +81,19 @@ export default function App() {
         Send Custom Message
       </Text>
 
+      <Text>
+        
+      </Text>
+
+      <Text
+        onPress={() => {
+          console.log('Set Interactive URL');
+          Player.setInteractiveURL('https://interactive.liveryvideo.com');
+        }}
+      >
+        Test interactive bridge
+      </Text>
+
     </View>
   );
 }
