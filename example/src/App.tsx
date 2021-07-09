@@ -30,7 +30,10 @@ export default function App() {
         }}
         onPlayerDidRecover={(event) => {
           console.log("onPlayerDidRecover", event.nativeEvent)
-      }}
+        }}
+        onProgressDidChange={(event) => {
+          console.log("onProgressDidChange", event.nativeEvent)
+        }}
         onGetCustomMessageValue={(event) => {
           console.log('onGetCustomMessageValue', event.nativeEvent);
           const name = event.nativeEvent['name'];

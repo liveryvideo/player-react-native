@@ -22,6 +22,7 @@ interface LiveryProps {
   onActiveQualityDidChange?: (event: SyntheticEvent<unknown, any>) => void;
   onPlayerError?: (event: SyntheticEvent<unknown, any>) => void;
   onPlayerDidRecover?: (event: SyntheticEvent<unknown, any>) => void;
+  onProgressDidChange?: (event: SyntheticEvent<unknown, any>) => void;
   onGetCustomMessageValue?: (event: SyntheticEvent<unknown, any>) => void;
 }
 
