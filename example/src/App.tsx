@@ -22,6 +22,9 @@ export default function App() {
         onPlaybackStateDidChange={(event) => {
           console.log('video state', event.nativeEvent);
         }}
+        onActiveQualityDidChange={(event) => {
+            console.log("onActiveQualityDidChange", event.nativeEvent)
+        }}
         onGetCustomMessageValue={(event) => {
           console.log('onGetCustomMessageValue', event.nativeEvent);
           const name = event.nativeEvent['name'];

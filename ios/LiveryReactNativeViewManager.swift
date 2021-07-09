@@ -23,6 +23,9 @@ class LiveryReactNativeView: UIView {
     /// Called when the playback state change
     @objc var onPlaybackStateDidChange: RCTBubblingEventBlock?
     
+    /// Called when the active quality change
+    @objc var onActiveQualityDidChange: RCTBubblingEventBlock?
+    
     /// Called when the player gets a custom message from the interactive bridge
     @objc var onGetCustomMessageValue: RCTBubblingEventBlock?
 }
@@ -31,6 +34,10 @@ class LiveryReactNativeView: UIView {
 extension LiveryReactNativeView: PlayerDelegate {
     func playbackStateDidChange(playbackState: Player.PlaybackState) {
         onPlaybackStateDidChange?(["playbackState": playbackState.description])
+    }
+    
+    func activeQualityDidChange(activeQuality: Quality?) {
+        onActiveQualityDidChange?(["activeQuality": activeQuality?.label ?? NSNull()])
     }
 }
 
