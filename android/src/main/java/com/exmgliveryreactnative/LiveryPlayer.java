@@ -64,11 +64,6 @@ public class LiveryPlayer extends ReactContextBaseJavaModule {
     });
   }
 
-  @ReactMethod
-  public void stop() {
-    pause();
-  }
-
   public void setStreamId(String streamId) {
     liverySDK.initialize(streamId, new LiverySDK.StateListener() {
       @Override

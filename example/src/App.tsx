@@ -68,19 +68,6 @@ export default function App() {
 
       <Text
         onPress={() => {
-          console.log('Stop');
-          Player.stop();
-        }}
-      >
-        Stop
-      </Text>
-
-      <Text>
-          
-      </Text>
-
-      <Text
-        onPress={() => {
           console.log('Send Custom Message');
           Player.sendInteractiveBridgeCustomCommand('test', 'react arg', (error: any, result: any) => {
             if (error !== null) {

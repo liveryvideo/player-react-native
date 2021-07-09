@@ -25,10 +25,6 @@ typealias PlayerDelegateInteractive = PlayerDelegate & PlayerInteractiveBridgeDe
         LiveryPlayer.player?.pause()
     }
     
-    @objc func stop() {
-        LiveryPlayer.player?.stop()
-    }
-    
     @objc static func requiresMainQueueSetup() -> Bool {
         return true
     }
