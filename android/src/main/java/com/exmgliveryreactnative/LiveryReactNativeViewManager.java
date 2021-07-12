@@ -92,6 +92,16 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
             reactContext.getJSModule(RCTEventEmitter.class)
               .receiveEvent(view.getId(), "onPlayerDidRecover", event);
           }
+
+          @Override
+          public void onProgressChanged(long buffer, long latency) {
+            Log.d("[LiveryPlayerListener]", "onProgressDidChange buffer: [" + buffer + "] latency: [" + latency + "]");
+            WritableMap event = Arguments.createMap();
+            event.putString("buffer", String.valueOf(buffer));
+            event.putString("latency", String.valueOf(latency));
+            reactContext.getJSModule(RCTEventEmitter.class)
+              .receiveEvent(view.getId(), "onProgressDidChange", event);
+          }
         });
 
       view.setInteractiveBridgeCustomCommandListener(new LiveryInteractiveBridge.CustomCommandListener() {
@@ -148,6 +158,16 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
           MapBuilder.of(
             "bubbled",
             "onPlayerError"
+          )
+        )
+      );
+      map.put(
+        "onProgressDidChange",
+        MapBuilder.of(
+          "phasedRegistrationNames",
+          MapBuilder.of(
+            "bubbled",
+            "onProgressDidChange"
           )
         )
       );
