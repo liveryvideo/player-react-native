@@ -20,6 +20,7 @@ import com.facebook.react.uimanager.events.RCTEventEmitter;
 
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,6 +103,23 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
             reactContext.getJSModule(RCTEventEmitter.class)
               .receiveEvent(view.getId(), "onProgressDidChange", event);
           }
+
+          @Override
+          public void onQualitiesChanged(List<LiveryQuality> qualities) {
+            List<String> qualitiesLabel = new ArrayList<>();
+            for (LiveryQuality quality : qualities) {
+              qualitiesLabel.add(quality.label);
+            }
+
+            String qualitiesLabelString = qualitiesLabel.toString();
+
+            Log.d("[LiveryPlayerListener]", "onQualitiesChanged qualities: " + qualitiesLabelString);
+
+            WritableMap event = Arguments.createMap();
+            event.putString("qualities", qualitiesLabelString);
+            reactContext.getJSModule(RCTEventEmitter.class)
+              .receiveEvent(view.getId(), "onQualitiesDidChange", event);
+          }
         });
 
       view.setInteractiveBridgeCustomCommandListener(new LiveryInteractiveBridge.CustomCommandListener() {
@@ -162,6 +180,16 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
         )
       );
       map.put(
+        "onPlayerDidRecover",
+        MapBuilder.of(
+          "phasedRegistrationNames",
+          MapBuilder.of(
+            "bubbled",
+            "onPlayerDidRecover"
+          )
+        )
+      );
+      map.put(
         "onProgressDidChange",
         MapBuilder.of(
           "phasedRegistrationNames",
@@ -172,12 +200,22 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
         )
       );
       map.put(
-        "onPlayerDidRecover",
+        "onQualitiesDidChange",
         MapBuilder.of(
           "phasedRegistrationNames",
           MapBuilder.of(
             "bubbled",
-            "onPlayerDidRecover"
+            "onQualitiesDidChange"
+          )
+        )
+      );
+      map.put(
+        "onQualitiesDidChange",
+        MapBuilder.of(
+          "phasedRegistrationNames",
+          MapBuilder.of(
+            "bubbled",
+            "onQualitiesDidChange"
           )
         )
       );
