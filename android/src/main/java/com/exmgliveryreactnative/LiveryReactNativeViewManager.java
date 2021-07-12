@@ -75,6 +75,15 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
             reactContext.getJSModule(RCTEventEmitter.class)
               .receiveEvent(view.getId(), "onActiveQualityDidChange", event);
           }
+
+          @Override
+          public void onPlayerError(Exception e) {
+            Log.d("[LiveryPlayerListener]", "onPlayerError " + e.toString());
+            WritableMap event = Arguments.createMap();
+            event.putString("error", e.toString());
+            reactContext.getJSModule(RCTEventEmitter.class)
+              .receiveEvent(view.getId(), "onPlayerError", event);
+          }
         });
 
       view.setInteractiveBridgeCustomCommandListener(new LiveryInteractiveBridge.CustomCommandListener() {
@@ -121,6 +130,16 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
           MapBuilder.of(
             "bubbled",
             "onActiveQualityDidChange"
+          )
+        )
+      );
+      map.put(
+        "onPlayerError",
+        MapBuilder.of(
+          "phasedRegistrationNames",
+          MapBuilder.of(
+            "bubbled",
+            "onPlayerError"
           )
         )
       );
