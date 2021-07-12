@@ -120,6 +120,16 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
             reactContext.getJSModule(RCTEventEmitter.class)
               .receiveEvent(view.getId(), "onQualitiesDidChange", event);
           }
+
+          @Override
+          public void onTimeUpdate(long currentTime) {
+            Log.d("[LiveryPlayerListener]", "onTimeDidUpdate currentTime: " + currentTime);
+
+            WritableMap event = Arguments.createMap();
+            event.putString("currentTime", String.valueOf(currentTime));
+            reactContext.getJSModule(RCTEventEmitter.class)
+              .receiveEvent(view.getId(), "onTimeDidUpdate", event);
+          }
         });
 
       view.setInteractiveBridgeCustomCommandListener(new LiveryInteractiveBridge.CustomCommandListener() {
@@ -216,6 +226,16 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
           MapBuilder.of(
             "bubbled",
             "onQualitiesDidChange"
+          )
+        )
+      );
+      map.put(
+        "onTimeDidUpdate",
+        MapBuilder.of(
+          "phasedRegistrationNames",
+          MapBuilder.of(
+            "bubbled",
+            "onTimeDidUpdate"
           )
         )
       );
