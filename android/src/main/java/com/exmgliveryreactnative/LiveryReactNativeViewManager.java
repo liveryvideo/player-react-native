@@ -140,6 +140,16 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
             reactContext.getJSModule(RCTEventEmitter.class)
               .receiveEvent(view.getId(), "onSourceDidChange", event);
           }
+
+          @Override
+          public void onVolumeChanged(float volume) {
+            Log.d("[LiveryPlayerListener]", "onVolumeChanged volume: " + volume);
+
+            WritableMap event = Arguments.createMap();
+            event.putString("volume", String.valueOf(volume));
+            reactContext.getJSModule(RCTEventEmitter.class)
+              .receiveEvent(view.getId(), "volumeDidChange", event);
+          }
         });
 
       view.setInteractiveBridgeCustomCommandListener(new LiveryInteractiveBridge.CustomCommandListener() {
@@ -230,16 +240,6 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
         )
       );
       map.put(
-        "onQualitiesDidChange",
-        MapBuilder.of(
-          "phasedRegistrationNames",
-          MapBuilder.of(
-            "bubbled",
-            "onQualitiesDidChange"
-          )
-        )
-      );
-      map.put(
         "onTimeDidUpdate",
         MapBuilder.of(
           "phasedRegistrationNames",
@@ -256,6 +256,16 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
           MapBuilder.of(
             "bubbled",
             "onSourceDidChange"
+          )
+        )
+      );
+      map.put(
+        "volumeDidChange",
+        MapBuilder.of(
+          "phasedRegistrationNames",
+          MapBuilder.of(
+            "bubbled",
+            "volumeDidChange"
           )
         )
       );
