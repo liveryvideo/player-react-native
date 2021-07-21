@@ -54,10 +54,17 @@ allprojects {
 }
 ```
 
-For iOS development, you need to add the Livery repository to your
-`ios/Podfile`.
+For iOS development, on your `ios/Podfile` do as follows:
+
+- check that iOS version is equal or higher than 12
+- add `use_frameworks!`
+- remove `use_flipper!()`
+- add the Livery repository source
 
 ```ruby
+platform :ios, '12.0'
+use_frameworks!
+
 # Livery private repository
 source 'https://github.com/exmg/livery-sdk-ios-podspec.git'
 # Default CocoaPods repository
@@ -69,6 +76,33 @@ Then (re)run CocoaPods:
 ```bash
 cd ios/
 pod install
+```
+
+#### Error: Cycle in dependencies between targets
+
+On iOS, if building the app fails with the following error:
+`Cycle in dependencies between targets 'YourProjectTarget' and 'FBReactNativeSpec'; building could produce unreliable results.`
+
+Please add the following lines to your App's `Podfile` inside `YourProjectTarget` and re-run `pod install` on the terminal
+
+```ruby
+post_install do |installer|
+    react_native_post_install(installer)
+    
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+          config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+        end
+        
+        if (target.name&.eql?('FBReactNativeSpec'))
+          target.build_phases.each do |build_phase|
+            if (build_phase.respond_to?(:name) && build_phase.name.eql?('[CP-User] Generate Specs'))
+              target.build_phases.move(build_phase, 0)
+            end
+          end
+        end
+      end
+  end
 ```
 
 ### Player usage
