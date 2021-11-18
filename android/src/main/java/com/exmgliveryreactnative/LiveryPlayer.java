@@ -1,6 +1,7 @@
 package com.exmgliveryreactnative;
 
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -117,6 +118,13 @@ public class LiveryPlayer extends ReactContextBaseJavaModule {
       @Override
       public void finished() {
         Log.d("[LiveryPlayer]", "create player finished...");
+
+        playerView.measure(
+          View.MeasureSpec.makeMeasureSpec(playerView.getMeasuredWidth(), View.MeasureSpec.EXACTLY),
+          View.MeasureSpec.makeMeasureSpec(playerView.getMeasuredHeight(), View.MeasureSpec.EXACTLY)
+        );
+        playerView.layout(playerView.getLeft(), playerView.getTop(), playerView.getRight(), playerView.getBottom());
+
       }
     }, new LiveryPlayerView.CreatePlayerErrorListener() {
       @Override
