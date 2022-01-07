@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Button, View } from 'react-native';
 import Player from '@exmg/livery-react-native';
 
 export default function App() {
@@ -8,51 +8,43 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text
-        onPress={() => {
-          console.log('PRESSED');
-          setStreamId('5ddb98f5e4b0937e6a4507f2');
-        }}
-      >
-        Press me
-      </Text>
       <Player
         streamId={streamId}
-        style={styles.box}
+        style={styles.player}
         onPlaybackStateDidChange={(event) => {
           console.log('video state', event.nativeEvent);
         }}
         onActiveQualityDidChange={(event) => {
-            console.log("onActiveQualityDidChange", event.nativeEvent)
+          console.log('onActiveQualityDidChange', event.nativeEvent);
         }}
         onPlayerError={(event) => {
-            console.log("onPlayerError", event.nativeEvent)
+          console.log('onPlayerError', event.nativeEvent);
         }}
         onPlayerDidRecover={(event) => {
-          console.log("onPlayerDidRecover", event.nativeEvent)
+          console.log('onPlayerDidRecover', event.nativeEvent);
         }}
         onProgressDidChange={(event) => {
-          console.log("onProgressDidChange", event.nativeEvent)
+          console.log('onProgressDidChange', event.nativeEvent);
         }}
         onQualitiesDidChange={(event) => {
-          console.log("onQualitiesDidChange", event.nativeEvent)
+          console.log('onQualitiesDidChange', event.nativeEvent);
         }}
         onSelectedQualityDidChange={(event) => {
-          console.log("onSelectedQualityDidChange", event.nativeEvent)
+          console.log('onSelectedQualityDidChange', event.nativeEvent);
         }}
         onSourceDidChange={(event) => {
-          console.log("onSourceDidChange", event.nativeEvent)
+          console.log('onSourceDidChange', event.nativeEvent);
         }}
         onTimeDidUpdate={(event) => {
-          console.log("onTimeDidUpdate", event.nativeEvent)
+          console.log('onTimeDidUpdate', event.nativeEvent);
         }}
         onVolumeDidChange={(event) => {
-          console.log("onVolumeDidChange", event.nativeEvent)
+          console.log('onVolumeDidChange', event.nativeEvent);
         }}
         onGetCustomMessageValue={(event) => {
           console.log('onGetCustomMessageValue', event.nativeEvent);
-          const name = event.nativeEvent['name'];
-          const arg = event.nativeEvent['arg'];
+          const name = event.nativeEvent.name;
+          const arg = event.nativeEvent.arg;
           if (arg !== null) {
             Player.sendResponseToInteractiveBridge(
               name,
@@ -64,31 +56,31 @@ export default function App() {
         }}
       />
 
-      <Text></Text>
+      <Button
+        onPress={() => {
+          console.log('PRESSED');
+          setStreamId('5ddb98f5e4b0937e6a4507f2');
+        }}
+        title="Initialize Player"
+      />
 
-      <Text
+      <Button
         onPress={() => {
           console.log('Play');
           Player.play();
         }}
-      >
-        Play
-      </Text>
+        title="Play"
+      />
 
-      <Text></Text>
-
-      <Text
+      <Button
         onPress={() => {
           console.log('Pause');
           Player.pause();
         }}
-      >
-        Pause
-      </Text>
+        title="Pause"
+      />
 
-      <Text></Text>
-
-      <Text
+      <Button
         onPress={() => {
           console.log('Send Custom Message');
           Player.sendInteractiveBridgeCustomCommand(
@@ -103,20 +95,16 @@ export default function App() {
             }
           );
         }}
-      >
-        Send Custom Message
-      </Text>
+        title="Send Custom Message"
+      />
 
-      <Text></Text>
-
-      <Text
+      <Button
         onPress={() => {
           console.log('Set Interactive URL');
           Player.setInteractiveURL('https://interactive.liveryvideo.com');
         }}
-      >
-        Test interactive bridge
-      </Text>
+        title="Test interactive bridge"
+      />
     </View>
   );
 }
@@ -124,12 +112,19 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
   },
-  box: {
-    width: 350,
-    height: 200,
+  button: {
+    margin: 10,
+  },
+  player: {
+    width: '100%',
+    height: '50%',
     marginVertical: 20,
+    backgroundColor: '#e0e0e0',
+    borderColor: 'black',
+    borderWidth: 1,
   },
 });

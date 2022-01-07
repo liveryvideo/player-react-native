@@ -54,9 +54,6 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
         Log.d("CONSOLE LOG: ","create view insteance");
         final LiveryPlayerView view = new LiveryPlayerView(reactContext.getCurrentActivity());
 
-        view.setKeepScreenOn(true);
-        view.setDebugModeEnabled(true);
-
         view.registerListener(new LiveryPlayerListener() {
           @Override
           public void onPlayerStateChanged(LiveryPlayerState playerState) {
