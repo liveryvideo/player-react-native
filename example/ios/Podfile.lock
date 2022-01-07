@@ -1,11 +1,11 @@
 PODS:
-  - AWSCore (2.24.2)
-  - AWSPinpoint (2.24.2):
-    - AWSCore (= 2.24.2)
+  - AWSCore (2.26.7)
+  - AWSPinpoint (2.26.7):
+    - AWSCore (= 2.26.7)
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
-  - exmg-livery-react-native (0.1.0):
-    - Livery (= 1.1.1)
+  - exmg-livery-react-native (1.0.0-alpha.0):
+    - Livery (= 1.3.0)
     - React-Core
   - FBLazyVector (0.63.4)
   - FBReactNativeSpec (0.63.4):
@@ -27,12 +27,12 @@ PODS:
   - glog (0.3.5)
   - google-cast-sdk-no-bluetooth-dynamic-ios (4.4.7):
     - Protobuf (~> 3.0)
-  - Livery (1.1.1):
-    - AWSPinpoint (~> 2.23)
+  - Livery (1.3.0):
+    - AWSPinpoint (~> 2.26)
     - google-cast-sdk-no-bluetooth-dynamic-ios (~> 4.4)
     - Sentry (~> 6.2)
     - TrueTime (~> 5.0.3)
-  - Protobuf (3.17.0)
+  - Protobuf (3.19.1)
   - RCTRequired (0.63.4)
   - RCTTypeSafety (0.63.4):
     - FBLazyVector (= 0.63.4)
@@ -365,18 +365,18 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AWSCore: 08a61ac2b1d98b2d43f59ee40c4bd68e58dfdea3
-  AWSPinpoint: a422ed2d24e0cc94499aaf60e2fbb7666954c8bf
+  AWSCore: e7fc9a005c527f2623b699a3ff8595fc45c24bd9
+  AWSPinpoint: 583934be6553b81021b6b4b95241b681d67f130e
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cde416483dac037923206447da6e1454df403714
-  exmg-livery-react-native: 4a91115c79ecd61bd6d27906eef080fea6ef1a41
+  exmg-livery-react-native: 3886e3f5c657d9a45181cecb5969cda65fd07936
   FBLazyVector: 3bb422f41b18121b71783a905c10e58606f7dc3e
   FBReactNativeSpec: f2c97f2529dd79c083355182cc158c9f98f4bd6e
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
   google-cast-sdk-no-bluetooth-dynamic-ios: 5764b5bc59e96334d9c10475d682b3bf515cab78
-  Livery: 2d7aa792bdc2bfd0470b65e3a81dfb7c56ccedf0
-  Protobuf: 7327d4444215b5f18e560a97f879ff5503c4581c
+  Livery: 968643e44b5e31565e598884dcd04f8f9afb124a
+  Protobuf: 3724efa50cb2846d7ccebc8691c574e85fd74471
   RCTRequired: 082f10cd3f905d6c124597fd1c14f6f2655ff65e
   RCTTypeSafety: 8c9c544ecbf20337d069e4ae7fd9a377aadf504b
   React: b0a957a2c44da4113b0c4c9853d8387f8e64e615
@@ -403,4 +403,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: a23e8647888c9fe7666ac2645d3f67d06b4be16d
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2
