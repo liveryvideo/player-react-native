@@ -1,4 +1,4 @@
-package com.exmgliveryreactnative;
+package com.liveryvideoplayerreactnative;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;

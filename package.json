@@ -1,5 +1,5 @@
 {
-  "name": "@exmg/livery-react-native",
+  "name": "@liveryvideo/player-react-native",
   "version": "1.0.0-alpha.0",
   "description": "Livery component for React Native",
   "main": "lib/commonjs/index",
@@ -13,7 +13,7 @@
     "android",
     "ios",
     "cpp",
-    "exmg-livery-react-native.podspec",
+    "liveryvideo-player-react-native.podspec",
     "!lib/typescript/example",
     "!android/build",
     "!ios/build",
@@ -36,10 +36,10 @@
     "ios",
     "android"
   ],
-  "repository": "https://bitbucket.org/exmachina/livery-sdk-react-native.git",
-  "author": "Ex Machina",
+  "repository": "https://github.com/liveryvideo/player-react-native.git",
+  "author": "Livery Video",
   "license": "MIT",
-  "homepage": "https://www.npmjs.com/package/@exmg/livery-react-native",
+  "homepage": "https://github.com/liveryvideo/player-react-native",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },

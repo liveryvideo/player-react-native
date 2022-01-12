@@ -1,4 +1,4 @@
-package com.exmgliveryreactnative;
+package com.liveryvideoplayerreactnative;
 
 import android.graphics.Color;
 import android.text.TextUtils;

@@ -4,9 +4,6 @@ PODS:
     - AWSCore (= 2.26.7)
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
-  - exmg-livery-react-native (1.0.0-alpha.0):
-    - Livery (= 1.3.0)
-    - React-Core
   - FBLazyVector (0.63.4)
   - FBReactNativeSpec (0.63.4):
     - Folly (= 2020.01.13.00)
@@ -32,6 +29,9 @@ PODS:
     - google-cast-sdk-no-bluetooth-dynamic-ios (~> 4.4)
     - Sentry (~> 6.2)
     - TrueTime (~> 5.0.3)
+  - liveryvideo-player-react-native (1.0.0-alpha.0):
+    - Livery (= 1.3.0)
+    - React-Core
   - Protobuf (3.19.1)
   - RCTRequired (0.63.4)
   - RCTTypeSafety (0.63.4):
@@ -267,11 +267,11 @@ PODS:
 
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
-  - exmg-livery-react-native (from `../..`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/Libraries/FBReactNativeSpec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - liveryvideo-player-react-native (from `../..`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
   - React (from `../node_modules/react-native/`)
@@ -311,8 +311,6 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
-  exmg-livery-react-native:
-    :path: "../.."
   FBLazyVector:
     :path: "../node_modules/react-native/Libraries/FBLazyVector"
   FBReactNativeSpec:
@@ -321,6 +319,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  liveryvideo-player-react-native:
+    :path: "../.."
   RCTRequired:
     :path: "../node_modules/react-native/Libraries/RCTRequired"
   RCTTypeSafety:
@@ -369,13 +369,13 @@ SPEC CHECKSUMS:
   AWSPinpoint: 583934be6553b81021b6b4b95241b681d67f130e
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cde416483dac037923206447da6e1454df403714
-  exmg-livery-react-native: 3886e3f5c657d9a45181cecb5969cda65fd07936
   FBLazyVector: 3bb422f41b18121b71783a905c10e58606f7dc3e
   FBReactNativeSpec: f2c97f2529dd79c083355182cc158c9f98f4bd6e
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
   google-cast-sdk-no-bluetooth-dynamic-ios: 5764b5bc59e96334d9c10475d682b3bf515cab78
   Livery: 968643e44b5e31565e598884dcd04f8f9afb124a
+  liveryvideo-player-react-native: a590cd1c3ea61f754a101971d15e91aa86ed4e1f
   Protobuf: 3724efa50cb2846d7ccebc8691c574e85fd74471
   RCTRequired: 082f10cd3f905d6c124597fd1c14f6f2655ff65e
   RCTTypeSafety: 8c9c544ecbf20337d069e4ae7fd9a377aadf504b
@@ -401,6 +401,6 @@ SPEC CHECKSUMS:
   TrueTime: b49551ffafb28a9dee04e51b226f42a416010842
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
 
-PODFILE CHECKSUM: a23e8647888c9fe7666ac2645d3f67d06b4be16d
+PODFILE CHECKSUM: 27b26436d05b69ce9fb9da31c18a4f34b266ac9d
 
 COCOAPODS: 1.11.2

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { StyleSheet, Button, View } from 'react-native';
-import Player from '@exmg/livery-react-native';
+import Player from '@liveryvideo/player-react-native';
 
 export default function App() {
   const [streamId, setStreamId] = React.useState('ABC');

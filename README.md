@@ -14,7 +14,7 @@ To install this package, you'll need access to the following:
 authToken=...
 ```
 
-- The Livery CocoaPods repository. Request credentials from Ex Machina, then
+- The Livery CocoaPods repository. Request credentials from Livery Video, then
   place them in your `~/.netrc` (create if necessary) as follows:
 
 ```
@@ -28,13 +28,13 @@ machine sdk-ios-binaries.liveryvideo.com
 Add the package as a dependency to your React Native project.
 
 ```bash
-yarn add @exmg/livery-react-native
+yarn add @liveryvideo/player-react-native
 ```
 
 For React Native 0.59 and below, you also need to link the package.
 
 ```bash
-react-native link @exmg/livery-react-native
+react-native link @liveryvideo/player-react-native
 ```
 
 For Android development, you need to add the Livery repository to your project
@@ -108,7 +108,7 @@ post_install do |installer|
 ### Player usage
 
 ```jsx
-import Player from '@exmg/livery-react-native';
+import Player from '@liveryvideo/player-react-native';
 ```
 
 Now create a player anywhere in your app using a stream id.

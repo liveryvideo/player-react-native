@@ -1,6 +1,6 @@
 //
 //  LiveryPlayer.m
-//  exmg-livery-react-native
+//  liveryvideo-player-react-native
 //
 //  Created by Jose Nogueira on 05/07/2021.
 //

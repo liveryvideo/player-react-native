@@ -1,4 +1,4 @@
-package com.example.exmgliveryreactnative;
+package com.example.liveryvideoplayerreactnative;
 
 import com.facebook.react.ReactActivity;
 

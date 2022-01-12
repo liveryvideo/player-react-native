@@ -388,9 +388,9 @@
 				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
 				"${BUILT_PRODUCTS_DIR}/TrueTime/TrueTime.framework",
 				"${BUILT_PRODUCTS_DIR}/Yoga/yoga.framework",
-				"${BUILT_PRODUCTS_DIR}/exmg-livery-react-native/exmg_livery_react_native.framework",
 				"${BUILT_PRODUCTS_DIR}/glog/glog.framework",
 				"${PODS_ROOT}/google-cast-sdk-no-bluetooth-dynamic-ios/GoogleCastSDK-ios-4.4.7_dynamic/GoogleCast.framework",
+				"${BUILT_PRODUCTS_DIR}/liveryvideo-player-react-native/liveryvideo_player_react_native.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -420,9 +420,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrueTime.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/yoga.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/exmg_livery_react_native.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleCast.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/liveryvideo_player_react_native.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -594,7 +594,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.exmgliveryreactnative;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.liveryvideoplayerreactnative;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LiveryReactNativeExample.app/LiveryReactNativeExample";
 			};
@@ -614,7 +614,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.exmgliveryreactnative;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.liveryvideoplayerreactnative;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LiveryReactNativeExample.app/LiveryReactNativeExample";
 			};
@@ -636,7 +636,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.exmgliveryreactnative;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.liveryvideoplayerreactnative;
 				PRODUCT_NAME = LiveryReactNativeExample;
 				SWIFT_OBJC_BRIDGING_HEADER = "LiveryReactNativeExample-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -660,7 +660,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.exmgliveryreactnative;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.liveryvideoplayerreactnative;
 				PRODUCT_NAME = LiveryReactNativeExample;
 				SWIFT_OBJC_BRIDGING_HEADER = "LiveryReactNativeExample-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

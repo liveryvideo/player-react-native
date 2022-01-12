@@ -1,6 +1,6 @@
 {
-  "name": "@exmg/livery-react-native-example",
-  "description": "Example app for @exmg/livery-react-native",
+  "name": "@liveryvideo/player-react-native-example",
+  "description": "Example app for @liveryvideo/player-react-native",
   "version": "0.0.1",
   "private": true,
   "scripts": {

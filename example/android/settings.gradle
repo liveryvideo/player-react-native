@@ -2,5 +2,5 @@ rootProject.name = 'LiveryReactNativeExample'
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
 
-include ':exmgliveryreactnative'
-project(':exmgliveryreactnative').projectDir = new File(rootProject.projectDir, '../../android')
+include ':liveryvideoplayerreactnative'
+project(':liveryvideoplayerreactnative').projectDir = new File(rootProject.projectDir, '../../android')

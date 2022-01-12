@@ -1,4 +1,4 @@
-package com.exmgliveryreactnative;
+package com.liveryvideoplayerreactnative;
 
 import android.util.Log;
 import android.view.View;

@@ -4,9 +4,9 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 platform :ios, '12.0'
 use_frameworks!
 
-# Livery private repository 
+# Livery private repository
 source 'https://github.com/exmg/livery-sdk-ios-podspec.git'
-# Default CocoaPods repository 
+# Default CocoaPods repository
 source 'https://cdn.cocoapods.org/'
 
 target 'LiveryReactNativeExample' do
@@ -14,5 +14,5 @@ target 'LiveryReactNativeExample' do
 
   use_react_native!(:path => config["reactNativePath"])
 
-  pod 'exmg-livery-react-native', :path => '../..'
+  pod 'liveryvideo-player-react-native', :path => '../..'
 end
