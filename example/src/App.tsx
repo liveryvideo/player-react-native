@@ -1,15 +1,19 @@
 import * as React from 'react';
 
 import { StyleSheet, Button, View } from 'react-native';
-import Player from '@liveryvideo/player-react-native';
+import Player, { PlaybackControlState } from '@liveryvideo/player-react-native';
 
 export default function App() {
-  const [streamId, setStreamId] = React.useState('ABC');
+  const [streamId, setStreamId] = React.useState<string | null>(null);
+  const [playback, setPlayback] = React.useState<PlaybackControlState | undefined>(undefined);
+  const [interactiveURL, setInteractiveURL] = React.useState<string | undefined>(undefined);
 
   return (
     <View style={styles.container}>
       <Player
         streamId={streamId}
+        playbackControlState={playback}
+        interactiveURL={interactiveURL}
         style={styles.player}
         onPlaybackStateDidChange={(event) => {
           console.log('video state', event.nativeEvent);
@@ -67,7 +71,7 @@ export default function App() {
       <Button
         onPress={() => {
           console.log('Play');
-          Player.play();
+          setPlayback(PlaybackControlState.Play)
         }}
         title="Play"
       />
@@ -75,7 +79,7 @@ export default function App() {
       <Button
         onPress={() => {
           console.log('Pause');
-          Player.pause();
+          setPlayback(PlaybackControlState.Pause)
         }}
         title="Pause"
       />
@@ -101,7 +105,7 @@ export default function App() {
       <Button
         onPress={() => {
           console.log('Set Interactive URL');
-          Player.setInteractiveURL('https://interactive.liveryvideo.com');
+          setInteractiveURL('https://interactive.liveryvideo.com');
         }}
         title="Test interactive bridge"
       />

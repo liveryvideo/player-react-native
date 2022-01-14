@@ -9,16 +9,25 @@ import * as React from 'react';
 
 const { LiveryPlayer } = NativeModules;
 
-interface VideoState {
+interface PlaybackState {
   playbackState: string;
 }
 
-interface LiveryProps {
-  streamId: string;
+export enum PlaybackControlState {
+  Pause = 0,
+  Play = 1,
+}
+
+interface PlayerState {
+  streamId: string | null;
+  playbackControlState: PlaybackControlState | undefined;
+  interactiveURL?: string | undefined;
+}
+
+interface PlayerProps {
   style: ViewStyle;
-  onPlaybackStateDidChange?: (
-    event: SyntheticEvent<unknown, VideoState>
-  ) => void;
+  onPlaybackStateDidChange?: (event: SyntheticEvent<unknown, PlaybackState>) => void;
+  onPlaybackRateDidChanged?: (event: SyntheticEvent<unknown, number>) => void;
   onActiveQualityDidChange?: (event: SyntheticEvent<unknown, any>) => void;
   onPlayerError?: (event: SyntheticEvent<unknown, any>) => void;
   onPlayerDidRecover?: (event: SyntheticEvent<unknown, any>) => void;
@@ -31,7 +40,7 @@ interface LiveryProps {
   onGetCustomMessageValue?: (event: SyntheticEvent<unknown, any>) => void;
 }
 
-type LiveryReactNativeProps = ViewProps & LiveryProps;
+type LiveryReactNativeProps = ViewProps & PlayerProps & PlayerState;
 
 const LiveryReactNativeViewManager =
   requireNativeComponent<LiveryReactNativeProps>('LiveryReactNativeView');
@@ -42,7 +51,7 @@ class Player extends PureComponent<LiveryReactNativeProps> {
   }
 
   onPlaybackStateDidChange = (
-    event: SyntheticEvent<unknown, VideoState>
+    event: SyntheticEvent<unknown, PlaybackState>
   ): void => {
     const { onPlaybackStateDidChange } = this.props;
 
@@ -59,13 +68,10 @@ class Player extends PureComponent<LiveryReactNativeProps> {
     }
   };
 
-  static play = LiveryPlayer.play;
-  static pause = LiveryPlayer.pause;
   static sendInteractiveBridgeCustomCommand =
     LiveryPlayer.sendInteractiveBridgeCustomCommand;
   static sendResponseToInteractiveBridge =
     LiveryPlayer.sendResponseToInteractiveBridge;
-  static setInteractiveURL = LiveryPlayer.setInteractiveURL;
 
   render() {
     return (
