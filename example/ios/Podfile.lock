@@ -375,7 +375,7 @@ SPEC CHECKSUMS:
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
   google-cast-sdk-no-bluetooth-dynamic-ios: 5764b5bc59e96334d9c10475d682b3bf515cab78
   Livery: 968643e44b5e31565e598884dcd04f8f9afb124a
-  liveryvideo-player-react-native: a590cd1c3ea61f754a101971d15e91aa86ed4e1f
+  liveryvideo-player-react-native: 7ad0899b036ee88f80f1ddd3f05b3d90e1f5468e
   Protobuf: 3724efa50cb2846d7ccebc8691c574e85fd74471
   RCTRequired: 082f10cd3f905d6c124597fd1c14f6f2655ff65e
   RCTTypeSafety: 8c9c544ecbf20337d069e4ae7fd9a377aadf504b
