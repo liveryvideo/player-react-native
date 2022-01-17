@@ -26,7 +26,9 @@ interface PlayerState {
 
 interface PlayerProps {
   style: ViewStyle;
-  onPlaybackStateDidChange?: (event: SyntheticEvent<unknown, PlaybackState>) => void;
+  onPlaybackStateDidChange?: (
+    event: SyntheticEvent<unknown, PlaybackState>
+  ) => void;
   onPlaybackRateDidChanged?: (event: SyntheticEvent<unknown, number>) => void;
   onActiveQualityDidChange?: (event: SyntheticEvent<unknown, any>) => void;
   onPlayerError?: (event: SyntheticEvent<unknown, any>) => void;
