@@ -5,8 +5,12 @@ import Player, { PlaybackControlState } from '@liveryvideo/player-react-native';
 
 export default function App() {
   const [streamId, setStreamId] = React.useState<string | null>(null);
-  const [playback, setPlayback] = React.useState<PlaybackControlState | undefined>(undefined);
-  const [interactiveURL, setInteractiveURL] = React.useState<string | undefined>(undefined);
+  const [playback, setPlayback] = React.useState<
+    PlaybackControlState | undefined
+  >(undefined);
+  const [interactiveURL, setInteractiveURL] = React.useState<
+    string | undefined
+  >(undefined);
 
   return (
     <View style={styles.container}>
@@ -71,7 +75,7 @@ export default function App() {
       <Button
         onPress={() => {
           console.log('Play');
-          setPlayback(PlaybackControlState.Play)
+          setPlayback(PlaybackControlState.Play);
         }}
         title="Play"
       />
@@ -79,7 +83,7 @@ export default function App() {
       <Button
         onPress={() => {
           console.log('Pause');
-          setPlayback(PlaybackControlState.Pause)
+          setPlayback(PlaybackControlState.Pause);
         }}
         title="Pause"
       />
