@@ -18,7 +18,7 @@ class LiveryPlayerEventsForwarder extends Forwarder implements LiveryPlayerListe
 
     @Override
     public void onActiveQualityChanged(LiveryQuality quality, boolean auto) {
-        event("onActiveQualityDidChange")
+        event(CallbackEvents.ON_ACTIVE_QUALITY_DID_CHANGE)
                 .putString("activeQuality", quality.label)
                 .putBoolean("auto", auto)
                 .emit();
@@ -26,21 +26,21 @@ class LiveryPlayerEventsForwarder extends Forwarder implements LiveryPlayerListe
 
     @Override
     public void onPlayerError(Exception e) {
-        event("onPlayerError")
+        event(CallbackEvents.ON_PLAYER_ERROR)
                 .putString("error", e.getLocalizedMessage())
                 .emit();
     }
 
     @Override
     public void onPlayerStateChanged(LiveryPlayerState playerState) {
-        event("onPlaybackStateDidChange")
+        event(CallbackEvents.ON_PLAYBACK_STATE_DID_CHANGE)
                 .putString("playerState", playerState.toString())
                 .emit();
     }
 
     @Override
     public void onProgressChanged(long buffer, long latency) {
-        event("onProgressDidChange")
+        event(CallbackEvents.ON_PROGRESS_DID_CHANGE)
                 .putInt("buffer", (int) buffer)
                 .putInt("latency", (int) latency)
                 .emit();
@@ -56,41 +56,41 @@ class LiveryPlayerEventsForwarder extends Forwarder implements LiveryPlayerListe
 
         String qualitiesLabelString = qualitiesLabel.toString();
 
-        event("onQualitiesDidChange")
+        event(CallbackEvents.ON_QUALITIES_DID_CHANGE)
                 .putString("qualities", qualitiesLabelString)
                 .emit();
     }
 
     @Override
     public void onPlaybackRateChanged(float rate) {
-        event("onPlaybackRateDidChanged")
+        event(CallbackEvents.ON_PLAYBACK_RATE_DID_CHANGED)
                 .putDouble("rate", rate)
                 .emit();
     }
 
     @Override
     public void onRecovered() {
-        event("onPlayerDidRecover")
+        event(CallbackEvents.ON_PLAYER_DID_RECOVER)
                 .emit();
     }
 
     @Override
     public void onTimeUpdate(long currentTime) {
-        event("onTimeDidUpdate")
+        event(CallbackEvents.ON_TIME_DID_UPDATE)
                 .putInt("currentTime", (int) currentTime)
                 .emit();
     }
 
     @Override
     public void onVolumeChanged(float volume) {
-        event("onVolumeDidChange")
+        event(CallbackEvents.ON_VOLUME_DID_CHANGE)
                 .putDouble("volume", volume)
                 .emit();
     }
 
     @Override
     public void onSourceChanged(String source) {
-        event("onSourceDidChange")
+        event(CallbackEvents.ON_SOURCE_DID_CHANGE)
                 .putString("source", source)
                 .emit();
     }

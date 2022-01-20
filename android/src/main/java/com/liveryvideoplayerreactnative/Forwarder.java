@@ -5,16 +5,18 @@ import android.util.Log;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 
 import java.lang.ref.WeakReference;
+import java.util.Collections;
 
 import tv.exmg.livery.LiveryPlayerView;
 
 class Forwarder {
 
     @SuppressWarnings("FieldCanBeLocal")
-    private final String TAG;
+    protected final String TAG;
     private final WeakReference<LiveryPlayerView> weakPlayerView;
     private final WeakReference<ReactContext> weakContext;
 
@@ -27,6 +29,10 @@ class Forwarder {
 
     protected Event event(String name) {
         return new Event(name);
+    }
+
+    protected Event event(CallbackEvents event) {
+        return new Event(event.name);
     }
 
     @SuppressWarnings("SameParameterValue")
@@ -55,6 +61,12 @@ class Forwarder {
 
         Event putDouble(String key, double value) {
             data.putDouble(key, value);
+            return this;
+        }
+
+        Event putObject(String key, Object value) {
+            WritableNativeMap map = Arguments.makeNativeMap(Collections.singletonMap(key, value));
+            data.merge(map);
             return this;
         }
 

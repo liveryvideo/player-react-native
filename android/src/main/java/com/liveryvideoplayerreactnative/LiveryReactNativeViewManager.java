@@ -8,22 +8,38 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.facebook.react.bridge.LifecycleEventListener;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import tv.exmg.livery.LiveryPlayerView;
 import tv.exmg.livery.LiverySDK;
+import tv.exmg.livery.interactivebridge.LiveryInteractiveBridge;
 
 @SuppressWarnings({"unused", "Convert2Lambda"})
 public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
     private static final String TAG = "LiveryViewManager";
 
     public static final String REACT_CLASS = "LiveryReactNativeView";
+
+    class LiveryPlayerViewWrapper {
+        final LiveryPlayerView playerView;
+        final LiveryInteractiveBridgeForwarder interactiveBridgeForwarder;
+
+        LiveryPlayerViewWrapper(LiveryPlayerView playerView, LiveryInteractiveBridgeForwarder interactiveBridgeForwarder) {
+            this.playerView = playerView;
+            this.interactiveBridgeForwarder = interactiveBridgeForwarder;
+        }
+    }
+    private final HashSet<LiveryPlayerViewWrapper> playersData = new HashSet<>();
 
     @Override
     @NonNull
@@ -37,27 +53,37 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
         Log.d(TAG, "create LiveryPlayerView instance");
         LiveryPlayerView player = new LiveryPlayerView(reactContext);
         player.registerListener(new LiveryPlayerEventsForwarder(reactContext, player));
-        player.setInteractiveBridgeCustomCommandListener(new LiveryInteractiveBridgeForwarder(reactContext, player));
+        LiveryInteractiveBridgeForwarder interactiveBridgeForwarder = new LiveryInteractiveBridgeForwarder(reactContext, player);
+        player.setInteractiveBridgeCustomCommandListener(interactiveBridgeForwarder);
         connectPlayerLifecycle(player, reactContext);
+        playersData.add(new LiveryPlayerViewWrapper(player, interactiveBridgeForwarder));
         return player;
+    }
+
+    @Override
+    public void onDropViewInstance(@NonNull View view) {
+        if (!(view instanceof LiveryPlayerView)) return;
+        LiveryPlayerView player = (LiveryPlayerView) view;
+        player.registerListener(null);
+        player.setInteractiveBridgeCustomCommandListener(null);
+        // ToDo: undo what connectPlayerLifecycle does
+
+        for (LiveryPlayerViewWrapper data : playersData) {
+            if (data.playerView == player) {
+                data.interactiveBridgeForwarder.interactiveBridgeMessages.clear();
+                playersData.remove(data);
+                break;
+            }
+        }
     }
 
     @Nullable
     @Override
     public Map<String, Object> getExportedCustomBubblingEventTypeConstants() {
         HashMap<String, Object> map = new HashMap<>();
-        addEventType(map, "onPlaybackStateDidChange");
-        addEventType(map, "onActiveQualityDidChange");
-        addEventType(map, "onPlayerError");
-        addEventType(map, "onPlayerDidRecover");
-        addEventType(map, "onProgressDidChange");
-        addEventType(map, "onQualitiesDidChange");
-        addEventType(map, "onTimeDidUpdate");
-        addEventType(map, "onSourceDidChange");
-        addEventType(map, "onVolumeDidChange");
-        addEventType(map, "onPlaybackRateDidChanged");
-
-        addEventType(map, "onGetCustomMessageValue");
+        for (CallbackEvents event: CallbackEvents.values()) {
+            addEventType(map, event.name);
+        }
         return map;
     }
 
@@ -106,6 +132,50 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
         view.setInteractiveUrl(interactiveURL);
     }
 
+    @Nullable
+    @Override
+    public Map<String, Integer> getCommandsMap() {
+        return CommandsMap.buildMap();
+    }
+
+    @Override
+    public void receiveCommand(@NonNull View root, int commandId, @Nullable ReadableArray args) {
+        receiveCommand(root, Integer.toString(commandId), args);
+    }
+
+    @Override
+    public void receiveCommand(@NonNull View root, String commandId, @Nullable ReadableArray args) {
+        if (!(root instanceof LiveryPlayerView)) return;
+        LiveryPlayerView playerView = (LiveryPlayerView) root;
+
+        CommandsMap command = CommandsMap.fromStringId(commandId);
+        switch (command) {
+            case SET_INTERACTIVE_URL: {
+                String url = args != null ? args.getString(0) : null;
+                playerView.setInteractiveUrl(url);
+
+                break;
+            }
+            case SEND_INTERACTIVE_BRIDGE_CUSTOM_COMMAND: {
+                String name = args != null ? args.getString(0) : null;
+                String arg = args != null ? args.getString(1) : null;
+                sendInteractiveBridgeCustomCommand(playerView, name, arg);
+
+                break;
+            }
+            case SEND_RESPONSE_TO_INTERACTIVE_BRIDGE: {
+                String name = args != null ? args.getString(0) : null;
+                String value = args != null ? args.getString(1) : null;
+                sendResponseToInteractiveBridge(playerView, name, value);
+
+                break;
+            }
+            default:
+                Log.d(TAG, "unhandled command " + commandId + " with " + args + " on " + root);
+        }
+
+    }
+
     private void createPlayer(LiveryPlayerView playerView) {
         playerView.createPlayer(new LiveryPlayerView.CreatePlayerListener() {
             @Override
@@ -124,6 +194,33 @@ public class LiveryReactNativeViewManager extends SimpleViewManager<View> {
                 Log.e(TAG, "Error creating player: " + e);
             }
         });
+    }
+
+    private void sendInteractiveBridgeCustomCommand(LiveryPlayerView playerView, String name, String arg) {
+        playerView.sendInteractiveBridgeCustomCommand(name, arg, new LiveryInteractiveBridge.CustomCommandResponseCallback() {
+            @Override
+            public void result(@Nullable Object response, @Nullable String error) {
+                Log.d(TAG, "result of " + name + " value: " + response + " error: " + error);
+                Forwarder forwarder = new Forwarder("CustomCommandResult",
+                        (ReactContext) playerView.getContext(),
+                        playerView);
+                forwarder.event(CallbackEvents.ON_INTERACTIVE_BRIDGE_CUSTOM_COMMAND_RESPONSE)
+                        .putString("name", name)
+                        .putString("arg", arg)
+                        .putObject("response", response)
+                        .putString("error", error)
+                        .emit();
+            }
+        });
+    }
+
+    private void sendResponseToInteractiveBridge(LiveryPlayerView playerView, String name, String value) {
+        for (LiveryPlayerViewWrapper data : playersData) {
+            if (data.playerView == playerView) {
+                data.interactiveBridgeForwarder.sendResponse(name, value);
+                break;
+            }
+        }
     }
 
     /**

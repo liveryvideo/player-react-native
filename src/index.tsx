@@ -1,13 +1,12 @@
 import { PureComponent, SyntheticEvent } from 'react';
 import {
-  NativeModules,
+  findNodeHandle,
   requireNativeComponent,
+  UIManager,
   ViewProps,
   ViewStyle,
 } from 'react-native';
 import * as React from 'react';
-
-const { LiveryPlayer } = NativeModules;
 
 interface PlaybackState {
   playbackState: string;
@@ -21,7 +20,6 @@ export enum PlaybackControlState {
 interface PlayerState {
   streamId: string | null;
   playbackControlState: PlaybackControlState | undefined;
-  interactiveURL?: string | undefined;
 }
 
 interface PlayerProps {
@@ -40,16 +38,48 @@ interface PlayerProps {
   onTimeDidUpdate?: (event: SyntheticEvent<unknown, any>) => void;
   onVolumeDidChange?: (event: SyntheticEvent<unknown, any>) => void;
   onGetCustomMessageValue?: (event: SyntheticEvent<unknown, any>) => void;
+  onInteractiveBridgeCustomCommandResponse?: (
+    event: SyntheticEvent<unknown, any>
+  ) => void;
 }
 
 type LiveryReactNativeProps = ViewProps & PlayerProps & PlayerState;
 
+const LiveryReactNativeViewName = 'LiveryReactNativeView';
+
 const LiveryReactNativeViewManager =
-  requireNativeComponent<LiveryReactNativeProps>('LiveryReactNativeView');
+  requireNativeComponent<LiveryReactNativeProps>(LiveryReactNativeViewName);
 
 class Player extends PureComponent<LiveryReactNativeProps> {
   constructor(props: LiveryReactNativeProps) {
     super(props);
+  }
+
+  setInteractiveURL(url: string) {
+    UIManager.dispatchViewManagerCommand(
+      findNodeHandle(this),
+      UIManager.getViewManagerConfig(LiveryReactNativeViewName).Commands
+        .setInteractiveURL,
+      [url]
+    );
+  }
+
+  sendInteractiveBridgeCustomCommand(name: string, arg: string) {
+    UIManager.dispatchViewManagerCommand(
+      findNodeHandle(this),
+      UIManager.getViewManagerConfig(LiveryReactNativeViewName).Commands
+        .sendInteractiveBridgeCustomCommand,
+      [name, arg]
+    );
+  }
+
+  sendResponseToInteractiveBridge(name: string, value: any) {
+    UIManager.dispatchViewManagerCommand(
+      findNodeHandle(this),
+      UIManager.getViewManagerConfig(LiveryReactNativeViewName).Commands
+        .sendResponseToInteractiveBridge,
+      [name, value]
+    );
   }
 
   onPlaybackStateDidChange = (
@@ -69,11 +99,6 @@ class Player extends PureComponent<LiveryReactNativeProps> {
       onGetCustomMessageValue(event);
     }
   };
-
-  static sendInteractiveBridgeCustomCommand =
-    LiveryPlayer.sendInteractiveBridgeCustomCommand;
-  static sendResponseToInteractiveBridge =
-    LiveryPlayer.sendResponseToInteractiveBridge;
 
   render() {
     return (

@@ -8,16 +8,15 @@ export default function App() {
   const [playback, setPlayback] = React.useState<
     PlaybackControlState | undefined
   >(undefined);
-  const [interactiveURL, setInteractiveURL] = React.useState<
-    string | undefined
-  >(undefined);
+
+  const playerRef = React.useRef<Player | null>(null);
 
   return (
     <View style={styles.container}>
       <Player
+        ref={playerRef}
         streamId={streamId}
         playbackControlState={playback}
-        interactiveURL={interactiveURL}
         style={styles.player}
         onPlaybackStateDidChange={(event) => {
           console.log('video state', event.nativeEvent);
@@ -31,8 +30,8 @@ export default function App() {
         onPlayerDidRecover={(event) => {
           console.log('onPlayerDidRecover', event.nativeEvent);
         }}
-        onProgressDidChange={(event) => {
-          console.log('onProgressDidChange', event.nativeEvent);
+        onProgressDidChange={(_event) => {
+          // console.log('onProgressDidChange', event.nativeEvent);
         }}
         onQualitiesDidChange={(event) => {
           console.log('onQualitiesDidChange', event.nativeEvent);
@@ -43,8 +42,8 @@ export default function App() {
         onSourceDidChange={(event) => {
           console.log('onSourceDidChange', event.nativeEvent);
         }}
-        onTimeDidUpdate={(event) => {
-          console.log('onTimeDidUpdate', event.nativeEvent);
+        onTimeDidUpdate={(_event) => {
+          // console.log('onTimeDidUpdate', event.nativeEvent);
         }}
         onVolumeDidChange={(event) => {
           console.log('onVolumeDidChange', event.nativeEvent);
@@ -54,13 +53,25 @@ export default function App() {
           const name = event.nativeEvent.name;
           const arg = event.nativeEvent.arg;
           if (arg !== null) {
-            Player.sendResponseToInteractiveBridge(
+            playerRef.current?.sendResponseToInteractiveBridge(
               name,
               'react got this with arg: ' + arg
             );
           } else {
-            Player.sendResponseToInteractiveBridge(name, 'react got this');
+            playerRef.current?.sendResponseToInteractiveBridge(
+              name,
+              'react got this'
+            );
           }
+        }}
+        onInteractiveBridgeCustomCommandResponse={(event) => {
+          console.log(
+            'onInteractiveBridgeCustomCommandResponse',
+            event.nativeEvent.name,
+            event.nativeEvent.arg,
+            event.nativeEvent.response,
+            event.nativeEvent.error
+          );
         }}
       />
 
@@ -91,16 +102,9 @@ export default function App() {
       <Button
         onPress={() => {
           console.log('Send Custom Message');
-          Player.sendInteractiveBridgeCustomCommand(
+          playerRef.current?.sendInteractiveBridgeCustomCommand(
             'test',
-            'react arg',
-            (error: any, result: any) => {
-              if (error !== null) {
-                console.log('Send Custom Message error:', error);
-              } else {
-                console.log('Send Custom Message result:', result);
-              }
-            }
+            'react arg'
           );
         }}
         title="Send Custom Message"
@@ -109,7 +113,9 @@ export default function App() {
       <Button
         onPress={() => {
           console.log('Set Interactive URL');
-          setInteractiveURL('https://interactive-bridge.liveryvideo.com');
+          playerRef.current?.setInteractiveURL(
+            'https://interactive-bridge.liveryvideo.com'
+          );
         }}
         title="Test interactive bridge"
       />
