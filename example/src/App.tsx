@@ -109,7 +109,7 @@ export default function App() {
       <Button
         onPress={() => {
           console.log('Set Interactive URL');
-          setInteractiveURL('https://interactive.liveryvideo.com');
+          setInteractiveURL('https://interactive-bridge.liveryvideo.com');
         }}
         title="Test interactive bridge"
       />
