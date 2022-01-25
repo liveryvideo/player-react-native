@@ -62,7 +62,7 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
         // Livery SDK
-    def livery_sdk_version = '2.3.0-beta.1'
+    def livery_sdk_version = '2.3.0'
     implementation "com.github.liveryvideo:livery-sdk-android:$livery_sdk_version"
 
 }
