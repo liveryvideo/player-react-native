@@ -6,6 +6,44 @@ class LiveryReactNativeViewManager: RCTViewManager {
     override func view() -> (LiveryReactNativeView) {
         return LiveryReactNativeView()
     }
+    
+    @objc override static func requiresMainQueueSetup() -> Bool {
+        return true
+    }
+    
+    private func withView(tag: NSNumber, _ block: @escaping (LiveryReactNativeView) -> Void) {
+        bridge.uiManager.addUIBlock { _, viewRegistry in
+            guard let viewRegistry = viewRegistry else { return }
+            guard let view = viewRegistry[tag] else { return }
+            guard let playerView = view as? LiveryReactNativeView else { return }
+            block(playerView)
+        }
+    }
+    
+    @objc
+    func setInteractiveURL(_ reactTag: NSNumber, url: String?) {
+        withView(tag: reactTag) { playerView in
+            playerView.setInteractiveURL(url)
+        }
+    }
+    
+    @objc
+    func sendInteractiveBridgeCustomCommand(_ reactTag: NSNumber, name: String, arg: Any?) {
+        withView(tag: reactTag) { playerView in
+            playerView.sendInteractiveBridgeCustomCommand(name: name, arg: arg)
+        }
+    }
+    
+    @objc
+    func sendResponseToInteractiveBridge(
+        _ reactTag: NSNumber,
+        name: String,
+        value: Any?
+    ) {
+        withView(tag: reactTag) { playerView in
+            playerView.sendResponseToInteractiveBridge(name: name, value: value)
+        }
+    }
 }
 
 class LiveryReactNativeView: UIView {
@@ -13,7 +51,8 @@ class LiveryReactNativeView: UIView {
     // MARK: Properties
     private let sdk: LiverySDK = LiverySDK()
     private var player: Player?
-
+    
+    private var interactiveBridgeMessages: [String: (Any?) -> Void] = [:]
 
     @objc func setStreamId(_ streamId: String?) {
         guard let streamId = streamId else { return }
@@ -27,12 +66,6 @@ class LiveryReactNativeView: UIView {
         } else {
             player.pause()
         }
-    }
-
-    @objc func setInteractiveURL(_ interactiveURL: String?) {
-        guard let interactiveURL = interactiveURL else { return }
-        guard let player = player else { return }
-        player.interactiveURL = URL(string: interactiveURL)
     }
 
     /// Called when the playback state change
@@ -57,6 +90,8 @@ class LiveryReactNativeView: UIView {
     @objc var onVolumeDidChange: RCTBubblingEventBlock?
     /// Called when the player gets a custom message from the interactive bridge
     @objc var onGetCustomMessageValue: RCTBubblingEventBlock?
+    
+    @objc var onInteractiveBridgeCustomCommandResponse: RCTBubblingEventBlock?
 }
 
 // MARK: Create Player
@@ -91,6 +126,41 @@ extension LiveryReactNativeView {
         player.delegate = self
         player.interactiveBridgeDelegate = self
         self.player = player
+    }
+    
+    func setInteractiveURL(_ interactiveURL: String?) {
+        guard let interactiveURL = interactiveURL else { return }
+        guard let player = player else { return }
+        player.interactiveURL = URL(string: interactiveURL)
+    }
+    
+    func sendInteractiveBridgeCustomCommand(name: String, arg: Any?) {
+        guard let player = player else { return }
+        player.sendInteractiveBridgeCustomCommand(name: name, arg: arg) { [weak self] result in
+            var response: [String: Any] = [
+                "name": name,
+                "arg": arg ?? NSNull(),
+                "response": NSNull(),
+                "error": NSNull()
+            ]
+            switch result {
+            case .success(let value):
+                print("[Player Interactive Bridge] name: [\(name)] arg: [\(arg ?? "nil")] response value: [\(value ?? "nil")]")
+                response["response"] = value ?? NSNull()
+            case .failure(let error):
+                print("[Player Interactive Bridge] name: [\(name)] arg: [\(arg ?? "nil")] error: [\(error)]")
+                response["error"] = error
+            @unknown default:
+                break
+            }
+            self?.onInteractiveBridgeCustomCommandResponse?(response)
+        }
+    }
+    
+    func sendResponseToInteractiveBridge(name: String, value: Any?) {        
+        print("[Player Interactive Bridge] sendResponseToInteractiveBridge name: [\(name)] | value: [\(value ?? "nil")]")
+        let callback = interactiveBridgeMessages.removeValue(forKey: name)
+        callback?(value)
     }
 
 }
@@ -143,8 +213,7 @@ extension LiveryReactNativeView: PlayerInteractiveBridgeDelegate {
     func getCustomMessageValue(message name: String, arg: Any?, completionHandler: @escaping (Any?) -> Void) {
         print("[Player Interactive Bridge] getCustomMessageValue name: [\(name)] arg: [\(arg ?? "nil")]")
 
-        // FIXME
-        // player.addMessage(with: name, handler: completionHandler)
-        // onGetCustomMessageValue?(["name": name, "arg": arg ?? NSNull()])
+        interactiveBridgeMessages[name] = completionHandler
+        onGetCustomMessageValue?(["name": name, "arg": arg ?? NSNull()])
     }
 }

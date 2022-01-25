@@ -4,7 +4,6 @@
 
 RCT_EXPORT_VIEW_PROPERTY(streamId, NSString)
 RCT_EXPORT_VIEW_PROPERTY(playbackControlState, NSInteger)
-RCT_EXPORT_VIEW_PROPERTY(interactiveURL, NSString)
 
 RCT_EXPORT_VIEW_PROPERTY(onPlaybackStateDidChange, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onActiveQualityDidChange, RCTBubblingEventBlock)
@@ -18,5 +17,10 @@ RCT_EXPORT_VIEW_PROPERTY(onTimeDidUpdate, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onVolumeDidChange, RCTBubblingEventBlock)
 
 RCT_EXPORT_VIEW_PROPERTY(onGetCustomMessageValue, RCTBubblingEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onInteractiveBridgeCustomCommandResponse, RCTBubblingEventBlock)
+
+RCT_EXTERN_METHOD(setInteractiveURL:(nonnull NSNumber*)reactTag url:(NSString*)url)
+RCT_EXTERN_METHOD(sendInteractiveBridgeCustomCommand:(nonnull NSNumber*)reactTag name:(nonnull NSString*)name arg:(id)arg)
+RCT_EXTERN_METHOD(sendResponseToInteractiveBridge:(nonnull NSNumber*)reactTag name:(nonnull NSString*)name value:(id)value)
 
 @end
