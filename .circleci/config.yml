@@ -87,12 +87,23 @@ jobs:
     steps:
       - attach_project
       - run:
-          name: Build package
+          name: Build android release
           command: |
             yarn example android-release
       - store_artifacts:
-          path: example/android/app/release
+          path: example/android/app/build/outputs/bundle/release
           destination: android
+
+  mac-build:
+    working_directory: ~/project
+    macos:
+      xcode: 11.3.0
+    steps:
+      - attach_project
+      - run:
+          name: Build ios release
+          command: |
+            yarn example ios-release
 
 
 workflows:
@@ -112,5 +123,8 @@ workflows:
           requires:
             - install-dependencies
       - android-build:
+          requires:
+            - install-dependencies
+      - mac-build:
           requires:
             - install-dependencies
