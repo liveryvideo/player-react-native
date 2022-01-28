@@ -83,7 +83,7 @@ jobs:
   android-build:
     working_directory: ~/project
     docker:
-      - image: cimg/android:2022.1.1-node
+      - image: cimg/android:2022.01.1-node
     steps:
       - attach_project
       - run:
