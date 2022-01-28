@@ -636,7 +636,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.liveryvideoplayerreactnative;
+				PRODUCT_BUNDLE_IDENTIFIER = com.liveryvideo.reactnative;
 				PRODUCT_NAME = LiveryReactNativeExample;
 				SWIFT_OBJC_BRIDGING_HEADER = "LiveryReactNativeExample-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -660,7 +660,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.liveryvideoplayerreactnative;
+				PRODUCT_BUNDLE_IDENTIFIER = com.liveryvideo.reactnative;
 				PRODUCT_NAME = LiveryReactNativeExample;
 				SWIFT_OBJC_BRIDGING_HEADER = "LiveryReactNativeExample-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
