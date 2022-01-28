@@ -95,17 +95,26 @@ jobs:
           destination: android
 
   mac-build:
-    working_directory: ~/project/example/ios
+    working_directory: ~/project
     macos:
       xcode: 13.0.0
     steps:
       - attach_project
       - run:
-          name: bundle install
+          name: Configure netrc
+          command: |
+            echo $NETRC_CONTENT > ~/.netrc
+            chmod 600 ~/.netrc
+      - run:
+          command: pod install
+          working_directory: example/ios
+      - run:
           command: bundle install
+          working_directory: example/ios
       - run:
           name: Build ios release
           command: bundle exec fastlane beta
+          working_directory: example/ios
 
 workflows:
   build-and-test:
