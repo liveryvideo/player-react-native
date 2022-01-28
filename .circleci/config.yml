@@ -95,16 +95,17 @@ jobs:
           destination: android
 
   mac-build:
-    working_directory: ~/project
+    working_directory: ~/project/example/ios
     macos:
       xcode: 13.0.0
     steps:
       - attach_project
       - run:
+          name: bundle install
+          command: bundle install
+      - run:
           name: Build ios release
-          command: |
-            yarn example ios-release
-
+          command: bundle exec fastlane beta
 
 workflows:
   build-and-test:
