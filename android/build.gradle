@@ -18,11 +18,10 @@ def safeExtGet(prop, fallback) {
 }
 
 android {
-    compileSdkVersion safeExtGet('LiveryReactNative_compileSdkVersion', 29)
-    buildToolsVersion safeExtGet('LiveryReactNative_buildToolsVersion', '29.0.2')
+    compileSdkVersion safeExtGet('LiveryReactNative_compileSdkVersion', 30)
     defaultConfig {
-        minSdkVersion safeExtGet('LiveryReactNative_minSdkVersion', 16)
-        targetSdkVersion safeExtGet('LiveryReactNative_targetSdkVersion', 29)
+        minSdkVersion safeExtGet('LiveryReactNative_minSdkVersion', 21)
+        targetSdkVersion safeExtGet('LiveryReactNative_targetSdkVersion', 30)
         versionCode 1
         versionName "1.0"
 
