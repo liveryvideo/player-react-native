@@ -6,7 +6,7 @@ buildscript {
         }
 
         dependencies {
-            classpath 'com.android.tools.build:gradle:3.5.3'
+            classpath('com.android.tools.build:gradle:7.1.0')
         }
     }
 }
@@ -22,8 +22,6 @@ android {
     defaultConfig {
         minSdkVersion safeExtGet('LiveryReactNative_minSdkVersion', 21)
         targetSdkVersion safeExtGet('LiveryReactNative_targetSdkVersion', 30)
-        versionCode 1
-        versionName "1.0"
 
     }
 
