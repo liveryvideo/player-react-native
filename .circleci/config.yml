@@ -130,7 +130,10 @@ jobs:
 workflows:
   build-and-test:
     jobs:
-      - install-dependencies
+      - install-dependencies:
+          filters:
+            tags:
+              only: /.*/
       - lint:
           requires:
             - install-dependencies
@@ -146,6 +149,9 @@ workflows:
       - android-build:
           requires:
             - install-dependencies
+          filters:
+            tags:
+              only: /.*/
       - android-deploy:
           requires:
             - android-build
