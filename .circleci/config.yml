@@ -89,7 +89,8 @@ jobs:
       - run:
           name: Build android release
           command: |
-            yarn example android-release
+            ./gradlew clean bundleRelease
+          working_directory: example/android
       - store_artifacts:
           path: example/android/app/build/outputs/bundle/release
           destination: android
@@ -104,6 +105,7 @@ jobs:
           name: Publishing release bundle
           command: |
             ./gradlew publishReleaseBundle
+          working_directory: example/android
 
   mac-build:
     working_directory: ~/project
