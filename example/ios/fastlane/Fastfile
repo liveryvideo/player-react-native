@@ -22,6 +22,8 @@ platform :ios do
 
   desc "Push a new beta build to TestFlight"
   lane :beta do
+    environment_variable
+    
      # Sign
     match(type: "appstore", readonly: is_ci)
 
