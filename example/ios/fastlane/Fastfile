@@ -25,31 +25,31 @@ platform :ios do
      # Sign
     match(type: "appstore", readonly: is_ci)
 
-    build_number = increment_build_number(xcodeproj: "LiveryReactNativeExample.xcodeproj")
+    #build_number = increment_build_number(xcodeproj: "LiveryReactNativeExample.xcodeproj")
 
     build_app(scheme: "LiveryReactNativeExample",
               workspace: "LiveryReactNativeExample.xcworkspace",
               clean: true)
 
-    upload_to_testflight(skip_waiting_for_build_processing: true)
+    #upload_to_testflight(skip_waiting_for_build_processing: true)
 
     # Commit the version bump
-    commit_version_bump(
-      message: "Build number bump", 
-      xcodeproj: "LiveryDemo.xcodeproj",
-      force: true
-    )
+    #commit_version_bump(
+    #  message: "Build number bump", 
+    #  xcodeproj: "LiveryDemo.xcodeproj",
+    #  force: true
+    #)
 
     # Add a git tag for this build
-    tag = "beta-#{build_number}"
-    add_git_tag(tag: "#{tag}")
-    UI.important "TAG: #{tag}"
+    #tag = "beta-#{build_number}"
+    #add_git_tag(tag: "#{tag}")
+    #UI.important "TAG: #{tag}"
 
     # Push the new commit to git remote
-    push_to_git_remote(
-      remote: "origin",
-      remote_branch: "develop",     
-      tags: true
-    )
+    #push_to_git_remote(
+    #  remote: "origin",
+    #  remote_branch: "develop",     
+    #  tags: true
+    #)
   end
 end

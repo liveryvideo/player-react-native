@@ -107,7 +107,7 @@ jobs:
             ./gradlew publishReleaseBundle
           working_directory: example/android
 
-  mac-build:
+  ios-build:
     working_directory: ~/project
     macos:
       xcode: 13.0.0
@@ -162,6 +162,6 @@ workflows:
               only: /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/
             branches:
               ignore: /.*/
-      - mac-build:
+      - ios-build:
           requires:
             - install-dependencies
