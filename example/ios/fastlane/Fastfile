@@ -18,47 +18,30 @@ default_platform(:ios)
 platform :ios do
   before_all do
     setup_circle_ci
-    test_app_store_connect_api_key
+    load_app_store_connect_api_key
   end
 
-  desc "Push a new beta build to TestFlight"
-  lane :beta do
-     # Sign
+  lane :build do 
+    # Sign
     match(type: "appstore", readonly: is_ci)
-
-    #build_number = increment_build_number(xcodeproj: "LiveryReactNativeExample.xcodeproj")
 
     build_app(scheme: "LiveryReactNativeExample",
               workspace: "LiveryReactNativeExample.xcworkspace",
               clean: true)
+  end 
 
-    #upload_to_testflight(skip_waiting_for_build_processing: true)
-
-    # Commit the version bump
-    #commit_version_bump(
-    #  message: "Build number bump", 
-    #  xcodeproj: "LiveryDemo.xcodeproj",
-    #  force: true
-    #)
-
-    # Add a git tag for this build
-    #tag = "beta-#{build_number}"
-    #add_git_tag(tag: "#{tag}")
-    #UI.important "TAG: #{tag}"
-
-    # Push the new commit to git remote
-    #push_to_git_remote(
-    #  remote: "origin",
-    #  remote_branch: "develop",     
-    #  tags: true
-    #)
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    # Requires build to run first
+    upload_to_testflight(skip_waiting_for_build_processing: true)
   end
 
-  lane :test_app_store_connect_api_key do 
+  desc "Load the App Store Connect API token"
+  lane :load_app_store_connect_api_key do 
     app_store_connect_api_key(
       key_id: ENV["APP_STORE_KEY_ID"],
       issuer_id: ENV["APP_STORE_ISSUER_ID"],
       key_content: ENV["APP_STORE_KEY_CONTENT"]
-  )
+    )
   end
 end

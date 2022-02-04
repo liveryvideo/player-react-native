@@ -126,6 +126,20 @@ jobs:
           working_directory: example/ios
       - run:
           name: Build ios release
+          command: bundle exec fastlane build
+          working_directory: example/ios
+          
+  ios-deploy:
+    working_directory: ~/project
+    macos:
+      xcode: 13.0.0
+    steps:
+      - attach_project
+      - run:
+          command: bundle install
+          working_directory: example/ios
+      - run:
+          name: Build ios release
           command: bundle exec fastlane beta
           working_directory: example/ios
 
@@ -165,3 +179,14 @@ workflows:
       - ios-build:
           requires:
             - install-dependencies
+          filters:
+            tags:
+              only: /.*/
+      - ios-deploy:
+          requires:
+            - ios-build
+          filters:
+            tags:
+              only: /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/
+            branches:
+              ignore: /.*/
