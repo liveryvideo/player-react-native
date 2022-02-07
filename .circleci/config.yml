@@ -145,9 +145,6 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: List work directory
-          command: ls
-      - run:
           command: bundle install
           working_directory: example/ios
       - run:
