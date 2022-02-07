@@ -142,6 +142,9 @@ jobs:
     steps:
       - attach_project
       - run:
+          command: bundle install
+          working_directory: example/ios
+      - run:
           name: Run fastlane beta
           command: bundle exec fastlane beta
           working_directory: example/ios
