@@ -133,7 +133,8 @@ jobs:
           destination: ios
       - persist_to_workspace:
           root: .
-          paths: ./example/ios
+          paths:
+            - .
           
   ios-deploy:
     working_directory: ~/project
@@ -143,6 +144,9 @@ jobs:
         # Reuse the workspace from the ios-build job
       - attach_workspace:
           at: .
+      - run:
+          name: List work directory
+          command: ls
       - run:
           command: bundle install
           working_directory: example/ios
