@@ -125,9 +125,12 @@ jobs:
           command: bundle install
           working_directory: example/ios
       - run:
-          name: Build ios release
+          name: Run fastlane build
           command: bundle exec fastlane build
           working_directory: example/ios
+      - store_artifacts:
+          path: example/ios
+          destination: ios
           
   ios-deploy:
     working_directory: ~/project
@@ -139,7 +142,7 @@ jobs:
           command: bundle install
           working_directory: example/ios
       - run:
-          name: Build ios release
+          name: Run fastlane beta
           command: bundle exec fastlane beta
           working_directory: example/ios
 
