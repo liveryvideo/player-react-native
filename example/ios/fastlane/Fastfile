@@ -36,7 +36,7 @@ platform :ios do
   lane :beta do
     # Requires build to run first
     upload_to_testflight(skip_waiting_for_build_processing: true,
-                         ipa: "./release/ivery-react-player-iOS-app.ipa")
+                         ipa: "release/livery-react-player-iOS-app.ipa")
   end
 
   desc "Load the App Store Connect API token"
