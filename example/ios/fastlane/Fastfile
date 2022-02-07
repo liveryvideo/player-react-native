@@ -27,7 +27,9 @@ platform :ios do
 
     build_app(scheme: "LiveryReactNativeExample",
               workspace: "LiveryReactNativeExample.xcworkspace",
-              clean: true)
+              clean: true,
+              output_directory: "./release",
+              output_name: "livery-react-player-iOS-app.ipa")
   end 
 
   desc "Push a new beta build to TestFlight"

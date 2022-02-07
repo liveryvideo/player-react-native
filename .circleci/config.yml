@@ -129,8 +129,11 @@ jobs:
           command: bundle exec fastlane build
           working_directory: example/ios
       - store_artifacts:
-          path: example/ios/LiveryReactNativeExample.ipa
+          path: example/ios/release
           destination: ios
+      - persist_to_workspace:
+          root: .
+          paths: .
           
   ios-deploy:
     working_directory: ~/project
@@ -138,9 +141,6 @@ jobs:
       xcode: 13.0.0
     steps:
       - attach_project
-      - run:
-          command: bundle install
-          working_directory: example/ios
       - run:
           name: Run fastlane beta
           command: bundle exec fastlane beta
