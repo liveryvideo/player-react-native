@@ -116,3 +116,7 @@ Now create a player anywhere in your app using a stream id.
 ```jsx
 const MyView = () => <Player streamId={'streamId'} />;
 ```
+
+### Release Showcase Apps
+- Run `yarn postversion` on the terminal to increment the build number on both platforms (iOS and Android). If the `version` also needs to be updated, change its value on the "package.json" file and run the `yarn postversion` command, which will update the version on both platforms as well.
+- Create a tag with the following format "major.minor.patch" and push it. CircleCI will do the rest.
