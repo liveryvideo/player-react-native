@@ -1,6 +1,6 @@
 {
   "name": "@liveryvideo/player-react-native",
-  "version": "1.0.0-alpha.0",
+  "version": "0.1.3",
   "description": "Livery component for React Native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -31,7 +31,7 @@
     "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods",
     "build:ios": "react-native bundle --entry-file='example/index.tsx' --bundle-output='./example/ios/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios'",
-    "postversion": "react-native-version"
+    "postversion": "react-native-version --never-amend --android './example/android/app/build.gradle' --ios './example/ios'"
   },
   "keywords": [
     "react-native",
